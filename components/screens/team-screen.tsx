@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescriptionHidden } from '@/components/ui/dialog'
 import { VyvyBot } from '@/components/game/vyvy-bot'
 import { Maria, Pablo, Julie, Carlos } from '@/components/game/characters'
 import { 
@@ -455,6 +455,9 @@ export function TeamScreen({ onNext, onBack }: TeamScreenProps) {
             <DialogTitle>
               {isAddingNew ? 'Nouvel employe' : `Modifier ${editingEmployee?.name}`}
             </DialogTitle>
+            <DialogDescriptionHidden>
+              {isAddingNew ? 'Formulaire pour ajouter un nouvel employe' : 'Formulaire pour modifier les informations de l\'employe'}
+            </DialogDescriptionHidden>
           </DialogHeader>
           
           <div className="space-y-4 py-4">

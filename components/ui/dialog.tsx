@@ -2,6 +2,7 @@
 
 import * as React from 'react'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { XIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
@@ -129,11 +130,25 @@ function DialogDescription({
   )
 }
 
+function DialogDescriptionHidden({
+  children = 'Dialog content',
+  ...props
+}: React.ComponentProps<typeof DialogPrimitive.Description>) {
+  return (
+    <VisuallyHidden asChild>
+      <DialogPrimitive.Description {...props}>
+        {children}
+      </DialogPrimitive.Description>
+    </VisuallyHidden>
+  )
+}
+
 export {
   Dialog,
   DialogClose,
   DialogContent,
   DialogDescription,
+  DialogDescriptionHidden,
   DialogFooter,
   DialogHeader,
   DialogOverlay,
