@@ -19,22 +19,21 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         className="text-center space-y-4"
       >
         <motion.h1
-          className="text-4xl md:text-6xl font-bold text-foreground text-balance"
-          initial={{ opacity: 0, scale: 0.9 }}
+          className="text-5xl md:text-7xl font-bold text-foreground text-balance leading-tight"
+          initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
         >
-          Bienvenue chez{' '}
-          <span className="text-primary">La Pizzeria</span>
+          Gestion RH<br />
+          <span className="text-primary">dans la vraie vie</span>
         </motion.h1>
         <motion.p
-          className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty"
+          className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto text-pretty font-light leading-relaxed"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
         >
-          Une experience immersive pour apprendre les bonnes pratiques RH 
-          a travers des situations reelles du quotidien.
+          Relevez des defis RH reels en tant que manager d'une pizzeria. Apprenez les bonnes pratiques a travers des situations authentiques et complexes.
         </motion.p>
       </motion.div>
 
@@ -61,20 +60,20 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
       >
         <FeatureCard
           icon={<Users className="w-6 h-6" />}
-          title="Gerez votre equipe"
-          description="Configurez les contrats et le suivi du temps de travail"
+          title="Composez votre equipe"
+          description="4 employes avec leurs contrats, salaires et preferences"
           delay={0.9}
         />
         <FeatureCard
           icon={<Building2 className="w-6 h-6" />}
-          title="Vivez le restaurant"
-          description="Plongez dans l'ambiance d'une vraie pizzeria"
+          title="Gerez le quotidien"
+          description="Maternite, accidents, licenciements : des cas reels"
           delay={1.0}
         />
         <FeatureCard
           icon={<Award className="w-6 h-6" />}
-          title="Prenez des decisions"
-          description="Faites face a des situations RH reelles"
+          title="Collectez vos donnees"
+          description="Rapport detaille de vos decisions RH"
           delay={1.1}
         />
       </motion.div>
