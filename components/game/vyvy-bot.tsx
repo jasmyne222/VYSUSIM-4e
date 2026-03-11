@@ -92,18 +92,18 @@ export function VyvyBot({
 
   return (
     <div className="flex flex-col items-center gap-4">
-      {/* Speech Bubble */}
+      {/* Speech Bubble - Professional Vysual style */}
       <AnimatePresence>
         {showSpeechBubble && message && (
           <motion.div
-            initial={{ opacity: 0, y: 10, scale: 0.9 }}
+            initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.9 }}
-            className="relative max-w-xs rounded-2xl bg-card px-4 py-3 text-card-foreground shadow-lg border border-border"
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            className="relative max-w-sm rounded-lg bg-card px-4 py-3 text-card-foreground shadow-md border border-border/80"
           >
             <p className="text-sm leading-relaxed">{displayedText}</p>
             {/* Speech bubble tail */}
-            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 rotate-45 bg-card border-r border-b border-border" />
+            <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rotate-45 bg-card border-r border-b border-border/80" />
           </motion.div>
         )}
       </AnimatePresence>

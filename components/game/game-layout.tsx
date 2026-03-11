@@ -19,9 +19,9 @@ export function GameLayout({ children, currentScreen, showProgress = true }: Gam
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Header with logo and progress */}
-      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
-        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+      {/* Header - Clean Vysual.ch style */}
+      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/60">
+        <div className="container mx-auto px-4 py-3.5 flex items-center justify-between">
           {/* Logo */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -30,14 +30,15 @@ export function GameLayout({ children, currentScreen, showProgress = true }: Gam
           >
             <Image
               src="/vysual-logo.png"
-              alt="Vysual HR Logo"
-              width={120}
-              height={40}
+              alt="Vysual"
+              width={100}
+              height={32}
               priority
-              className="h-8 w-auto"
+              className="h-7 w-auto"
             />
-            <div className="hidden sm:block">
-              <p className="text-xs text-muted-foreground">Serious Game</p>
+            <div className="hidden sm:flex items-center gap-2">
+              <span className="w-px h-4 bg-border" />
+              <p className="text-xs font-medium text-muted-foreground tracking-wide uppercase">Serious Game</p>
             </div>
           </motion.div>
 
@@ -58,7 +59,7 @@ export function GameLayout({ children, currentScreen, showProgress = true }: Gam
 
           {/* Mobile step indicator */}
           {showProgress && currentScreen !== 'welcome' && (
-            <div className="md:hidden text-sm text-muted-foreground">
+            <div className="md:hidden text-xs font-medium text-muted-foreground bg-muted px-2.5 py-1 rounded">
               {currentStep + 1} / {screenOrder.length}
             </div>
           )}
@@ -66,14 +67,16 @@ export function GameLayout({ children, currentScreen, showProgress = true }: Gam
       </header>
 
       {/* Main content */}
-      <main className="flex-1 container mx-auto px-4 py-6 md:py-8">
+      <main className="flex-1 container mx-auto px-4 py-8 md:py-10">
         {children}
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-border py-4">
-        <div className="container mx-auto px-4 text-center text-xs text-muted-foreground">
-          Vysual HR - Formation RH interactive
+      {/* Footer - Minimal Vysual style */}
+      <footer className="border-t border-border/60 py-4 bg-muted/30">
+        <div className="container mx-auto px-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
+          <span>Vysual</span>
+          <span className="w-1 h-1 rounded-full bg-primary/60" />
+          <span>Formation RH interactive</span>
         </div>
       </footer>
     </div>

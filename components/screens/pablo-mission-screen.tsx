@@ -212,7 +212,7 @@ export function PabloMissionScreen({ onComplete, onBack }: PabloMissionScreenPro
           <AlertTriangle className="w-4 h-4" />
           Situation de crise
         </div>
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+        <h2 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
           Mission : Accident de Pablo
         </h2>
         <p className="text-muted-foreground">
@@ -362,7 +362,7 @@ function ResultScreen({ decisions, onComplete, onBack }: ResultScreenProps) {
         >
           <CheckCircle2 className="w-10 h-10 text-amber-600" />
         </motion.div>
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+        <h2 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
           Situation geree !
         </h2>
         <p className="text-muted-foreground max-w-xl mx-auto">

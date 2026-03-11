@@ -188,17 +188,17 @@ export function TeamScreen({ onNext, onBack }: TeamScreenProps) {
   const subordinates = employees.filter(e => e.managerId !== null)
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
+    <div className="space-y-8">
+      {/* Header - Vysual corporate style */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center space-y-2"
+        className="text-center space-y-3"
       >
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+        <h2 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
           Configuration de l'equipe
         </h2>
-        <p className="text-muted-foreground max-w-xl mx-auto">
+        <p className="text-muted-foreground max-w-xl mx-auto text-sm">
           Gerez votre equipe et leurs informations contractuelles
         </p>
       </motion.div>
@@ -287,7 +287,7 @@ export function TeamScreen({ onNext, onBack }: TeamScreenProps) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <Card className="group hover:border-primary/50 transition-colors">
+                    <Card className="group hover:border-primary/40 hover:shadow-sm transition-all">
                       <CardContent className="p-4">
                         <div className="flex items-start gap-4">
                           <div className="flex-shrink-0">
@@ -320,15 +320,15 @@ export function TeamScreen({ onNext, onBack }: TeamScreenProps) {
                             </div>
                             
                             <div className="mt-3 flex flex-wrap gap-2">
-                              <span className={`px-2 py-0.5 text-xs rounded-full ${
+                              <span className={`px-2 py-0.5 text-xs font-medium rounded ${
                                 employee.contractType === 'CDI' 
-                                  ? 'bg-green-100 text-green-700' 
-                                  : 'bg-amber-100 text-amber-700'
+                                  ? 'bg-primary/10 text-primary' 
+                                  : 'bg-muted text-muted-foreground'
                               }`}>
                                 {employee.contractType}
                               </span>
                               {employee.drivingLicense && (
-                                <span className="px-2 py-0.5 text-xs rounded-full bg-blue-100 text-blue-700 flex items-center gap-1">
+                                <span className="px-2 py-0.5 text-xs font-medium rounded bg-muted text-muted-foreground flex items-center gap-1">
                                   <Car className="w-3 h-3" />
                                   Permis
                                 </span>

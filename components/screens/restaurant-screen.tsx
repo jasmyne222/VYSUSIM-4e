@@ -41,17 +41,17 @@ export function RestaurantScreen({ onNext, onBack }: RestaurantScreenProps) {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
+    <div className="space-y-8">
+      {/* Header - Vysual style */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center space-y-2"
+        className="text-center space-y-3"
       >
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+        <h2 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
           La Pizzeria
         </h2>
-        <p className="text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           Un mardi soir ordinaire... ou presque
         </p>
       </motion.div>
@@ -109,12 +109,12 @@ export function RestaurantScreen({ onNext, onBack }: RestaurantScreenProps) {
             onCharacterClick={handleCharacterClick}
           />
 
-          {/* Crisis alert banner */}
+          {/* Crisis alert banner - Professional style */}
           {showCrisis && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mt-4 p-4 rounded-xl bg-destructive/10 border border-destructive/30"
+              className="mt-4 p-4 rounded-lg bg-destructive/5 border border-destructive/20"
             >
               <div className="flex items-start gap-3">
                 <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />

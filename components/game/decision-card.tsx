@@ -36,11 +36,11 @@ export function DecisionCard({
       onClick={onClick}
       disabled={isDisabled}
       className={cn(
-        'relative w-full text-left p-4 rounded-xl border-2 transition-all duration-200',
+        'relative w-full text-left p-4 rounded-lg border transition-all duration-200',
         'flex items-start gap-3',
         isSelected
-          ? 'border-primary bg-primary/10 shadow-lg shadow-primary/20'
-          : 'border-border bg-card hover:border-primary/50 hover:bg-card/80',
+          ? 'border-primary bg-primary/5 shadow-sm'
+          : 'border-border bg-card hover:border-primary/40 hover:bg-muted/30',
         isDisabled && 'opacity-50 cursor-not-allowed'
       )}
     >
@@ -86,13 +86,13 @@ export function DecisionCard({
         )}
       </div>
 
-      {/* Glow effect when selected */}
+      {/* Subtle highlight when selected - Vysual style */}
       {isSelected && (
         <motion.div
-          className="absolute inset-0 rounded-xl bg-primary/5 -z-10"
+          className="absolute inset-0 rounded-lg bg-primary/3 -z-10"
           initial={{ opacity: 0 }}
-          animate={{ opacity: [0.5, 0.8, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
         />
       )}
     </motion.button>

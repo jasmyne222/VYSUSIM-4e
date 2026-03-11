@@ -237,7 +237,7 @@ export function DismissalMissionScreen({ employees, onComplete, onBack }: Dismis
           <UserMinus className="w-4 h-4" />
           Procedure sensible
         </div>
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+        <h2 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
           Mission : Gestion des departs
         </h2>
         <p className="text-muted-foreground">
@@ -464,7 +464,7 @@ function ResultScreen({ decisions, employees, onComplete, onBack }: ResultScreen
         >
           <CheckCircle2 className="w-10 h-10 text-red-600" />
         </motion.div>
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+        <h2 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
           Procedure configuree !
         </h2>
         <p className="text-muted-foreground max-w-xl mx-auto">

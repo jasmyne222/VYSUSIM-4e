@@ -27,7 +27,8 @@ function Confetti() {
   }>>([])
 
   useEffect(() => {
-    const colors = ['#FF5200', '#FFD93D', '#6BCB77', '#4D96FF', '#FF6B6B']
+    // Vysual corporate colors - orange primary with subtle accents
+    const colors = ['#FF5200', '#FF7A3D', '#FFE5D9', '#4A5568', '#E2E8F0']
     const newParticles = Array.from({ length: 50 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
@@ -111,7 +112,7 @@ export function ReportScreen({ session, onRestart }: ReportScreenProps) {
         >
           <Sparkles className="w-12 h-12 text-white" />
         </motion.div>
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+        <h2 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
           Felicitations !
         </h2>
         <p className="text-muted-foreground max-w-xl mx-auto">
