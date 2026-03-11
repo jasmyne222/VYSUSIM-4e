@@ -3,7 +3,6 @@
 export type GameScreen = 
   | 'welcome' 
   | 'team' 
-  | 'restaurant' 
   | 'mission-julie' 
   | 'mission-pablo' 
   | 'mission-dismissal' 

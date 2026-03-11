@@ -19,108 +19,92 @@ const missionSteps = [
   {
     id: 'congeDuree',
     title: "Duree du conge maternite",
-    description: "Julie est enceinte ! Quelle duree de conge lui accordez-vous ?",
-    helpText: "Le conge maternite legal est de 16 semaines minimum, mais peut etre etendu.",
+    description: "Julie annonce sa grossesse",
     icon: <Clock className="w-5 h-5" />,
     options: [
       {
         id: 'legal',
         text: "16 semaines (minimum legal)",
-        description: "6 semaines avant + 10 semaines apres",
-        hrLearning: "Le minimum legal. Certaines conventions prevoient plus."
+        hrContext: "Vysual utilisera cette duree pour configurer l'absence, calculer la paie et planifier le remplacement."
       },
       {
         id: '20',
         text: "20 semaines",
-        description: "Un peu plus que le legal",
-        hrLearning: "Un geste apprecie qui fidelise les salariees."
+        hrContext: "Vysual utilisera cette duree pour configurer l'absence, calculer la paie et planifier le remplacement."
       },
       {
         id: '24',
         text: "24 semaines",
-        description: "Conge etendu genereux",
-        hrLearning: "Politique familiale avantageuse, mais cout plus eleve."
+        hrContext: "Vysual utilisera cette duree pour configurer l'absence, calculer la paie et planifier le remplacement."
       }
     ]
   },
   {
     id: 'congeSalaire',
-    title: "Maintien de salaire",
-    description: "Comment gerez-vous le salaire de Julie pendant son conge ?",
-    helpText: "Les indemnites journalieres de la Secu ne couvrent pas toujours 100% du salaire.",
+    title: "Salaire pendant le conge",
+    description: "Quel est le maintien de salaire ?",
     icon: <Wallet className="w-5 h-5" />,
     options: [
       {
         id: 'complet',
         text: "Maintien a 100%",
-        description: "Je complete les IJSS pour atteindre 100%",
-        hrLearning: "Tres apprecie, favorise le retour au travail serein."
+        hrContext: "Vysual calculera le complement aux IJSS Secu et l'ajoutera a la paie mensuelle."
       },
       {
         id: 'partiel',
         text: "Maintien partiel (80%)",
-        description: "Je complete partiellement les IJSS",
-        hrLearning: "Compromis raisonnable entre generosite et couts."
+        hrContext: "Vysual calculera le complement partiel aux IJSS et precisera le solde pour Julie."
       },
       {
         id: 'ijss',
         text: "IJSS uniquement",
-        description: "Julie ne recoit que les indemnites Secu",
-        hrLearning: "Legal mais peut etre difficile financierement."
+        hrContext: "Vysual declarera l'absence et remplacera le salaire par les IJSS Secu (a verifier)."
       }
     ]
   },
   {
     id: 'congeRemplacement',
-    title: "Remplacement pendant l'absence",
-    description: "Comment remplacez-vous Julie pendant son conge ?",
-    helpText: "Le choix impacte la continuite du service et le retour de Julie.",
+    title: "Remplacement durant l'absence",
+    description: "Comment remplacer Julie ?",
     icon: <Users className="w-5 h-5" />,
     options: [
       {
         id: 'interne',
         text: "Promotion interne temporaire",
-        description: "Un collegue prend le poste temporairement",
-        hrLearning: "Valorise l'equipe mais attention a la charge de travail."
+        hrContext: "Vysual enregistrera la promotion temporaire et assurera le retour au poste normal."
       },
       {
         id: 'cdd',
         text: "CDD de remplacement",
-        description: "Recruter un CDD specifique",
-        hrLearning: "Solution courante, le CDD peut durer jusqu'au retour."
+        hrContext: "Vysual generera le contrat CDD jusqu'au retour de Julie et gerera les fins de contrat."
       },
       {
         id: 'interim',
-        text: "Interim",
-        description: "Faire appel a une agence d'interim",
-        hrLearning: "Flexible mais cout plus eleve qu'un CDD."
+        text: "Agence interim",
+        hrContext: "Vysual tracera les frais interim, les declarations et le suivi des rapports."
       }
     ]
   },
   {
     id: 'workflowValidation',
-    title: "Qui valide les demandes ?",
-    description: "Qui est responsable de valider les conges maternite ?",
-    helpText: "La validation implique des responsabilites juridiques.",
+    title: "Qui valide les absences ?",
+    description: "Qui approuve le conge maternite ?",
     icon: <PenTool className="w-5 h-5" />,
     options: [
       {
         id: 'moi',
         text: "Moi (gerant)",
-        description: "Je valide personnellement",
-        hrLearning: "Controle total mais charge administrative."
+        hrContext: "Vous validez directement dans Vysual. Responsabilite complete, mais full control."
       },
       {
         id: 'rh',
         text: "Service RH (Vysual)",
-        description: "Vysual gere les validations",
-        hrLearning: "Delegue la charge, expertise RH garantie."
+        hrContext: "Vysual valide et enregistre. Gain de temps, expertise RH integree."
       },
       {
         id: 'fiduciaire',
-        text: "Fiduciaire / Comptable",
-        description: "Mon cabinet gere",
-        hrLearning: "Possible mais moins specialise en RH."
+        text: "Cabinet comptable",
+        hrContext: "Vous autorisez votre cabinet a valider via Vysual. Coordination externe."
       }
     ]
   }
@@ -201,7 +185,7 @@ export function JulieMissionScreen({ onComplete, onBack }: JulieMissionScreenPro
           Bonne nouvelle !
         </div>
         <h2 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
-          Mission : Conge maternite de Julie
+          Mission 1 — Conge maternite
         </h2>
         <p className="text-muted-foreground">
           Etape {currentStep + 1} sur {missionSteps.length}
@@ -278,6 +262,7 @@ export function JulieMissionScreen({ onComplete, onBack }: JulieMissionScreenPro
                         id={option.id}
                         text={option.text}
                         description={option.description}
+                        hrContext={option.hrContext}
                         isSelected={decisions[step.id] === option.id}
                         onClick={() => handleSelect(option.id)}
                         index={index}

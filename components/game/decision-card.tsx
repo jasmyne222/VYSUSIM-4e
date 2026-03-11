@@ -12,6 +12,7 @@ interface DecisionCardProps {
   isSelected?: boolean
   isDisabled?: boolean
   consequence?: string
+  hrContext?: string
   onClick?: () => void
   index?: number
 }
@@ -23,6 +24,7 @@ export function DecisionCard({
   isSelected = false,
   isDisabled = false,
   consequence,
+  hrContext,
   onClick,
   index = 0
 }: DecisionCardProps) {
@@ -72,6 +74,18 @@ export function DecisionCard({
         
         {description && (
           <p className="mt-1 text-sm text-muted-foreground">{description}</p>
+        )}
+
+        {/* HR Learning Context */}
+        {hrContext && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            className="mt-2 p-2 rounded bg-muted/50 flex items-start gap-2"
+          >
+            <span className="text-base flex-shrink-0">💡</span>
+            <p className="text-xs text-muted-foreground leading-relaxed">{hrContext}</p>
+          </motion.div>
         )}
 
         {/* Consequence reveal on selection */}

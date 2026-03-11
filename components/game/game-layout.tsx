@@ -11,8 +11,8 @@ interface GameLayoutProps {
   showProgress?: boolean
 }
 
-const screenOrder: GameScreen[] = ['welcome', 'team', 'restaurant', 'mission-julie', 'mission-pablo', 'mission-dismissal', 'report']
-const screenLabels = ['Bienvenue', 'Equipe', 'Restaurant', 'Julie', 'Pablo', 'Departs', 'Rapport']
+const screenOrder: GameScreen[] = ['welcome', 'team', 'mission-julie', 'mission-pablo', 'mission-dismissal', 'report']
+const screenLabels = ['Bienvenue', 'Equipe', 'Julie', 'Pablo', 'Departs', 'Rapport']
 
 export function GameLayout({ children, currentScreen, showProgress = true }: GameLayoutProps) {
   const currentStep = screenOrder.indexOf(currentScreen)

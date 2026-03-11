@@ -22,118 +22,107 @@ const missionSteps = [
   {
     id: 'employeeName',
     title: "Quel employe ?",
-    description: "Selectionnez l'employe concerne par cette procedure.",
-    helpText: "Chaque employe a des droits specifiques selon son contrat et son anciennete.",
+    description: "Selectionnez l'employe a licencier",
     icon: <UserMinus className="w-5 h-5" />,
     type: 'select' as const
   },
   {
     id: 'motif',
-    title: "Motif de la separation",
-    description: "Quel est le motif de cette fin de contrat ?",
-    helpText: "Le motif determine la procedure a suivre et les indemnites dues.",
+    title: "Motif du depart",
+    description: "Quelle est la raison ?",
     icon: <FileWarning className="w-5 h-5" />,
     type: 'cards' as const,
     options: [
       {
         id: 'economique',
-        text: "Motif economique",
-        description: "Difficultes financieres, reorganisation, etc.",
-        hrLearning: "Le licenciement economique suit une procedure stricte avec PSE si + de 10 salaries."
+        text: "Raisons economiques",
+        hrContext: "Vysual generera la procedure legale et checklist PSE si necessaire."
       },
       {
         id: 'faute',
         text: "Faute professionnelle",
-        description: "Manquement aux obligations du contrat",
-        hrLearning: "La faute doit etre prouvee. Faute grave = pas de preavis ni d'indemnites."
+        hrContext: "Vysual documentera la faute et generera l'entretien prealable officiel."
       },
       {
         id: 'finCDD',
         text: "Fin de CDD",
-        description: "Arrivee au terme du contrat",
-        hrLearning: "Prime de precarite de 10% sauf faute grave ou refus de CDI."
+        hrContext: "Vysual calculera la prime de precarite (10%) et les indemnites CDD."
       },
       {
         id: 'essai',
-        text: "Rupture periode d'essai",
-        description: "Pendant la periode d'essai",
-        hrLearning: "Pas d'indemnites mais respect du delai de prevenance."
+        text: "Rupture essai",
+        hrContext: "Vysual archivera la rupture sans indemnites mais avec respect du delai."
+      },
+      {
+        id: 'commun',
+        text: "Rupture conventionnelle",
+        hrContext: "Vysual creera l'accord de rupture et validera la transaction."
       }
     ]
   },
   {
     id: 'preavis',
     title: "Duree du preavis",
-    description: "Quelle duree de preavis appliquez-vous ?",
-    helpText: "Le preavis depend de l'anciennete et de la convention collective.",
+    description: "Combien de temps ?",
     icon: <Clock className="w-5 h-5" />,
     type: 'cards' as const,
     options: [
       {
         id: 'legal',
-        text: "Preavis legal",
-        description: "Selon le code du travail (1 a 2 mois)",
-        hrLearning: "Le minimum legal : 1 mois si < 2 ans, 2 mois si > 2 ans."
+        text: "Legal (1-2 mois)",
+        hrContext: "Vysual appliquera automatiquement le delai selon l'anciennete."
       },
       {
         id: '1mois',
         text: "1 mois",
-        description: "Un mois de preavis",
-        hrLearning: "Courant pour les employes avec moins de 2 ans d'anciennete."
+        hrContext: "Vysual enregistrera 1 mois exact et calculera la date de fin."
       },
       {
         id: '3mois',
         text: "3 mois",
-        description: "Trois mois de preavis",
-        hrLearning: "Souvent applique aux cadres ou profils seniors."
+        hrContext: "Vysual creera le calendrier 3 mois et generera les reminders."
       },
       {
-        id: 'contrat',
-        text: "Selon le contrat",
-        description: "Ce qui est stipule dans le contrat de travail",
-        hrLearning: "Le contrat peut prevoir des conditions plus favorables que la loi."
+        id: 'rien',
+        text: "Pas de preavis",
+        hrContext: "Vysual marquera comme depart immediat (exception autorisee)."
       }
     ]
   },
   {
     id: 'solde',
     title: "Solde de tout compte",
-    description: "Quels elements incluez-vous dans le solde ?",
-    helpText: "Le solde de tout compte recapitule toutes les sommes dues au salarie.",
+    description: "Elements du solde ?",
     icon: <Wallet className="w-5 h-5" />,
     type: 'multiselect' as const,
     options: [
-      { id: 'vacances', text: "Conges payes non pris", description: "Indemnite compensatrice de CP" },
-      { id: 'heuresSup', text: "Heures supplementaires", description: "Heures non recuperees" },
-      { id: 'primes', text: "Primes au prorata", description: "13eme mois, interessement..." },
-      { id: 'indemnite', text: "Indemnite de licenciement", description: "Si applicable" }
+      { id: 'vacances', text: "Conges payes non pris", hrContext: "Vysual calculera l'indemnite CP" },
+      { id: 'heuresSup', text: "Heures supplementaires", hrContext: "Vysual listera les heures non recuperees" },
+      { id: 'primes', text: "Primes au prorata", hrContext: "Vysual calculera 13e mois et autres primes" },
+      { id: 'indemnite', text: "Indemnite legale", hrContext: "Vysual calculera selon anciennete et motif" }
     ]
   },
   {
     id: 'signataire',
-    title: "Qui signe les documents ?",
-    description: "Qui sera signataire des documents officiels ?",
-    helpText: "Le signataire engage la responsabilite de l'entreprise.",
+    title: "Qui signe ?",
+    description: "Signataire des documents",
     icon: <PenTool className="w-5 h-5" />,
     type: 'cards' as const,
     options: [
       {
         id: 'moi',
-        text: "Moi (gerant)",
-        description: "Je signe personnellement",
-        hrLearning: "En tant que representant legal, vous avez pouvoir de signature."
+        text: "Vous (gerant)",
+        hrContext: "Vous aurez pouvoir signature. Vysual prepare tous les documents."
       },
       {
         id: 'rh',
-        text: "Service RH",
-        description: "Delegation au service RH",
-        hrLearning: "Le RH doit avoir une delegation de pouvoir ecrite."
+        text: "Service RH (Vysual)",
+        hrContext: "Vysual signe avec votre delegation. Procedure automatisee."
       },
       {
         id: 'fiduciaire',
-        text: "Fiduciaire / Expert",
-        description: "Mon cabinet gere la procedure",
-        hrLearning: "Utile pour securiser juridiquement la procedure."
+        text: "Cabinet comptable",
+        hrContext: "Votre cabinet signe. Vysual coordonne et archive tout."
       }
     ]
   }
@@ -238,7 +227,7 @@ export function DismissalMissionScreen({ employees, onComplete, onBack }: Dismis
           Procedure sensible
         </div>
         <h2 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
-          Mission : Gestion des departs
+          Mission 3 — Gestion des licenciements
         </h2>
         <p className="text-muted-foreground">
           Etape {currentStep + 1} sur {missionSteps.length}
@@ -334,6 +323,7 @@ export function DismissalMissionScreen({ employees, onComplete, onBack }: Dismis
                           id={option.id}
                           text={option.text}
                           description={option.description}
+                          hrContext={option.hrContext}
                           isSelected={decisions[step.id] === option.id}
                           onClick={() => handleSelect(option.id)}
                           index={index}
@@ -370,6 +360,12 @@ export function DismissalMissionScreen({ employees, onComplete, onBack }: Dismis
                             <p className="text-sm text-muted-foreground mt-1">
                               {option.description}
                             </p>
+                            {option.hrContext && (
+                              <div className="mt-2 p-2 rounded bg-muted/50 flex items-start gap-2">
+                                <span className="text-base flex-shrink-0">💡</span>
+                                <p className="text-xs text-muted-foreground leading-relaxed">{option.hrContext}</p>
+                              </div>
+                            )}
                           </div>
                         </div>
                       ))}

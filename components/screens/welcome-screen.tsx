@@ -24,8 +24,8 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
         >
-          Solution RH<br />
-          <span className="text-primary font-bold">simple, intuitive, efficace</span>
+          <span className="text-primary font-bold">VYSUSIM</span><br />
+          Simulateur RH pour managers
         </motion.h1>
         <motion.p
           className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto text-pretty leading-relaxed"
@@ -33,7 +33,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
         >
-          Relevez des defis RH reels en tant que manager d'une pizzeria. Apprenez les bonnes pratiques a travers des situations authentiques.
+          6 minutes pour maitriser les decisions RH critiques. Gerez une pizzeria, relevez des crises reelles, et comprenez pourquoi Vysual est necessaire.
         </motion.p>
       </motion.div>
 
@@ -45,7 +45,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         className="my-4"
       >
         <VyvyBot
-          message="Bienvenue ! Je suis Vyvy, votre assistant RH. Ensemble, decouvrons comment gerer une equipe efficacement."
+          message="Bienvenue dans VYSUSIM ! Vous etes manager d'une pizzeria. Ensemble, affrontons des defis RH reels et voyons comment Vysual peut vous aider."
           expression="happy"
           size="lg"
         />
@@ -61,19 +61,19 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         <FeatureCard
           icon={<Users className="w-5 h-5" />}
           title="Composez votre equipe"
-          description="4 employes avec leurs contrats et preferences"
+          description="4 employes avec contrats et roles"
           delay={0.9}
         />
         <FeatureCard
           icon={<Building2 className="w-5 h-5" />}
-          title="Gerez le quotidien"
-          description="Maternite, accidents, departs : des cas reels"
+          title="Affrontez 3 crises RH"
+          description="Maternite, accident travail, licenciement"
           delay={1.0}
         />
         <FeatureCard
           icon={<Award className="w-5 h-5" />}
-          title="Analysez vos decisions"
-          description="Rapport detaille de vos choix RH"
+          title="Comprenez le 'pourquoi'"
+          description="Contexte HR pour chaque decision"
           delay={1.1}
         />
       </motion.div>

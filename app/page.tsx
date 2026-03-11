@@ -5,7 +5,6 @@ import { GameLayout } from '@/components/game/game-layout'
 import { ScreenTransition } from '@/components/game/screen-transition'
 import { WelcomeScreen } from '@/components/screens/welcome-screen'
 import { TeamScreen } from '@/components/screens/team-screen'
-import { RestaurantScreen } from '@/components/screens/restaurant-screen'
 import { JulieMissionScreen } from '@/components/screens/julie-mission-screen'
 import { PabloMissionScreen } from '@/components/screens/pablo-mission-screen'
 import { DismissalMissionScreen } from '@/components/screens/dismissal-mission-screen'
@@ -33,10 +32,6 @@ export default function GamePage() {
 
   const handleTeamComplete = (employees: Employee[]) => {
     updateTeam(employees)
-    setScreen('restaurant')
-  }
-
-  const handleRestaurantNext = () => {
     setScreen('mission-julie')
   }
 
@@ -72,18 +67,11 @@ export default function GamePage() {
             onBack={() => setScreen('welcome')}
           />
         )
-      case 'restaurant':
-        return (
-          <RestaurantScreen
-            onNext={handleRestaurantNext}
-            onBack={() => setScreen('team')}
-          />
-        )
       case 'mission-julie':
         return (
           <JulieMissionScreen
             onComplete={handleJulieMissionComplete}
-            onBack={() => setScreen('restaurant')}
+            onBack={() => setScreen('team')}
           />
         )
       case 'mission-pablo':

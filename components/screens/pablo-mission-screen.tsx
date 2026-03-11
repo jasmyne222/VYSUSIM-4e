@@ -19,120 +19,92 @@ const missionSteps = [
   {
     id: 'accidentType',
     title: "Type d'accident",
-    description: "Pablo s'est blesse en cuisinant. Comment classez-vous cet accident ?",
-    helpText: "Le type d'accident determine les obligations legales et la prise en charge.",
+    description: "Pablo s'est blesse en cuisinant",
     icon: <AlertTriangle className="w-5 h-5" />,
     options: [
       {
         id: 'travail',
         text: "Accident de travail",
-        icon: "briefcase",
-        description: "Survenu pendant l'exercice de ses fonctions au restaurant",
-        hrLearning: "Un accident de travail doit etre declare dans les 48h a la CPAM."
+        hrContext: "Vysual declarera l'accident a la CPAM dans les 48h et generera le formulaire officiel."
       },
       {
         id: 'trajet',
         text: "Accident de trajet",
-        icon: "car",
-        description: "Survenu sur le trajet domicile-travail",
-        hrLearning: "L'accident de trajet a un regime specifique, different de l'accident de travail."
+        hrContext: "Vysual gera le regime specifique accident trajet aupres de la Secu avec declarations appropriees."
       },
       {
         id: 'horsPoste',
-        text: "Accident hors poste",
-        icon: "home",
-        description: "Survenu en dehors du temps de travail",
-        hrLearning: "Hors temps de travail = arret maladie classique, pas d'accident de travail."
+        text: "Accident hors travail",
+        hrContext: "Vysual enregistrera comme arret maladie classique, pas de declaration accident de travail."
       }
     ]
   },
   {
     id: 'accidentDeclaration',
-    title: "Qui fait la declaration ?",
-    description: "L'accident doit etre declare officiellement. Qui s'en charge ?",
-    helpText: "La declaration est obligatoire et engage la responsabilite de l'employeur.",
+    title: "Qui declare l'accident ?",
+    description: "Responsable de la notification officielle",
     icon: <FileText className="w-5 h-5" />,
     options: [
       {
         id: 'moi',
-        text: "Je m'en charge personnellement",
-        icon: "user",
-        description: "En tant que gerant, je fais la declaration moi-meme",
-        hrLearning: "L'employeur est responsable de la declaration dans les 48h."
+        text: "Moi (gerant)",
+        hrContext: "Vous gerez la declaration. Vysual vous aide a rediger le formulaire officiel."
       },
       {
         id: 'fiduciaire',
-        text: "Ma fiduciaire / comptable",
-        icon: "building",
-        description: "Je delegue a mon cabinet comptable",
-        hrLearning: "Deleguer est possible mais l'employeur reste responsable du delai."
+        text: "Cabinet comptable",
+        hrContext: "Votre cabinet declare via Vysual. Suivi partage et archivage centralise."
       },
       {
         id: 'rh',
-        text: "Service RH externe (Vysual)",
-        icon: "users",
-        description: "Vysual gere la declaration pour moi",
-        hrLearning: "Un service RH peut gerer, mais doit avoir les informations rapidement."
+        text: "Service RH (Vysual)",
+        hrContext: "Vysual declare directement aupres de la Secu. Declaration rapide et serieuse."
       }
     ]
   },
   {
     id: 'accidentRemplacement',
     title: "Remplacement de Pablo",
-    description: "Pablo sera absent 2 semaines. Comment gerez-vous son absence ?",
-    helpText: "Le choix impacte la continuite du service et les couts.",
+    description: "Pablo est absent 2 semaines",
     icon: <UserCog className="w-5 h-5" />,
     options: [
       {
         id: 'interimaire',
-        text: "Recruter un interimaire",
-        icon: "user-plus",
-        description: "Faire appel a une agence d'interim",
-        hrLearning: "L'interim permet une flexibilite mais a un cout plus eleve."
+        text: "Agence interim",
+        hrContext: "Vysual trace les heures interim, le calcul des couts et genere les declarations URSSAF."
       },
       {
         id: 'heuresSup',
-        text: "Heures supplementaires equipe",
-        icon: "clock",
-        description: "Repartir le travail sur l'equipe existante",
-        hrLearning: "Les heures sup sont reglementees : max 220h/an, majorees de 25% a 50%."
+        text: "Heures supplementaires",
+        hrContext: "Vysual calcule les heures sup (maj 25-50%), la limite legale (220h/an) et la paie."
       },
       {
         id: 'rien',
         text: "Reduire l'activite",
-        icon: "minus-circle",
-        description: "Adapter le service le temps de l'absence",
-        hrLearning: "Solution economique mais peut impacter la qualite de service."
+        hrContext: "Vysual ajuste les plannings et le chiffre d'affaires pour cette periode."
       }
     ]
   },
   {
     id: 'accidentSalaire',
-    title: "Maintien de salaire",
-    description: "Pendant l'arret de Pablo, comment gerez-vous son salaire ?",
-    helpText: "Le maintien de salaire depend de la convention collective et de l'anciennete.",
+    title: "Salaire pendant l'absence",
+    description: "Comment maintenir la paie de Pablo ?",
     icon: <Wallet className="w-5 h-5" />,
     options: [
       {
         id: 'complet',
         text: "Maintien a 100%",
-        icon: "check-circle",
-        description: "Je complete les indemnites CPAM pour atteindre 100%",
-        hrLearning: "Genereux mais pas obligatoire, cela fidelise les employes."
+        hrContext: "Vysual calcule le complement aux IJSS Secu et l'ajoute a la paie mensuelle."
       },
       {
         id: 'partiel',
-        text: "Maintien partiel",
-        icon: "percent",
-        description: "Je complete partiellement (ex: 80%)",
-        hrLearning: "Un compromis entre fidelisation et gestion des couts."
+        text: "Maintien 80%",
+        hrContext: "Vysual calcule le complement partiel et precise le solde pour Pablo."
       },
       {
         id: 'ijss',
         text: "IJSS uniquement",
-        icon: "file-text",
-        description: "Pablo ne recoit que les indemnites de la Secu",
-        hrLearning: "Legal mais peut etre mal percu par l'employe."
+        hrContext: "Vysual remplace la paie par les IJSS Secu (a verifier avec convention collective)."
       }
     ]
   }
@@ -213,7 +185,7 @@ export function PabloMissionScreen({ onComplete, onBack }: PabloMissionScreenPro
           Situation de crise
         </div>
         <h2 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
-          Mission : Accident de Pablo
+          Mission 2 — Accident de travail
         </h2>
         <p className="text-muted-foreground">
           Etape {currentStep + 1} sur {missionSteps.length}
@@ -296,6 +268,7 @@ export function PabloMissionScreen({ onComplete, onBack }: PabloMissionScreenPro
                         id={option.id}
                         text={option.text}
                         description={option.description}
+                        hrContext={option.hrContext}
                         isSelected={decisions[step.id] === option.id}
                         onClick={() => handleSelect(option.id)}
                         index={index}
