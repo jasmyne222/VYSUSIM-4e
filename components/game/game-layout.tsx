@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { ProgressIndicator } from './screen-transition'
 import type { GameScreen } from '@/lib/types/game'
@@ -25,13 +26,17 @@ export function GameLayout({ children, currentScreen, showProgress = true }: Gam
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-2"
+            className="flex items-center gap-3"
           >
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg">V</span>
-            </div>
+            <Image
+              src="/vysual-logo.png"
+              alt="Vysual HR Logo"
+              width={120}
+              height={40}
+              priority
+              className="h-8 w-auto"
+            />
             <div className="hidden sm:block">
-              <h1 className="font-bold text-foreground">Vysual HR</h1>
               <p className="text-xs text-muted-foreground">Serious Game</p>
             </div>
           </motion.div>
