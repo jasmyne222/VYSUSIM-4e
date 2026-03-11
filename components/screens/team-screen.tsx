@@ -1,84 +1,194 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Switch } from '@/components/ui/switch'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 import { VyvyBot } from '@/components/game/vyvy-bot'
 import { Maria, Pablo, Julie, Carlos } from '@/components/game/characters'
-import { ArrowRight, ArrowLeft, Briefcase, Clock, Calendar } from 'lucide-react'
-import type { Employee } from '@/lib/types/game'
+import { 
+  ArrowRight, ArrowLeft, Briefcase, Clock, Calendar, 
+  Plus, Edit2, Trash2, Users, GitBranch, Car, X, Check
+} from 'lucide-react'
+import type { Employee, RoleType, ContractType, TimekeepingMethod } from '@/lib/types/game'
 
 interface TeamScreenProps {
   onNext: (employees: Employee[]) => void
   onBack: () => void
 }
 
+type ViewMode = 'cards' | 'orgchart'
+
+const roleOptions: RoleType[] = ['Gerant', 'Cuisinier', 'Serveur', 'Chef de rang', 'Livreur', 'Autre']
+const contractOptions: ContractType[] = ['CDI', 'CDD', 'Temps partiel', 'Apprenti']
+const timekeepingOptions: TimekeepingMethod[] = ['Timbreuse', 'Smartphone', 'Web']
+
 const defaultEmployees: Employee[] = [
   {
     id: '1',
     name: 'Maria',
-    role: 'Chef de cuisine',
+    role: 'Gerant',
     contractType: 'CDI',
     age: 42,
+    drivingLicense: true,
+    timekeepingMethods: ['Smartphone', 'Web'],
+    managerId: null,
     startDate: '2019-03-15',
-    timekeepingMethod: 'badge',
     avatarConfig: { color: '#D64933' }
   },
   {
     id: '2',
     name: 'Pablo',
-    role: 'Serveur',
+    role: 'Cuisinier',
     contractType: 'CDI',
     age: 28,
+    drivingLicense: false,
+    timekeepingMethods: ['Smartphone'],
+    managerId: '1',
     startDate: '2021-09-01',
-    timekeepingMethod: 'app',
     avatarConfig: { color: '#2D3436' }
   },
   {
     id: '3',
     name: 'Julie',
-    role: 'Nouvelle serveuse',
+    role: 'Chef de rang',
     contractType: 'CDD',
     age: 23,
+    drivingLicense: true,
+    timekeepingMethods: ['Smartphone', 'Web'],
+    managerId: '1',
     startDate: '2024-01-08',
-    timekeepingMethod: 'manual',
     avatarConfig: { color: '#6C5CE7' }
   },
   {
     id: '4',
     name: 'Carlos',
-    role: 'Manager',
+    role: 'Livreur',
     contractType: 'CDI',
     age: 35,
+    drivingLicense: true,
+    timekeepingMethods: ['Smartphone'],
+    managerId: '1',
     startDate: '2018-06-01',
-    timekeepingMethod: 'badge',
     avatarConfig: { color: '#00B894' }
   }
 ]
 
+const emptyEmployee: Omit<Employee, 'id'> = {
+  name: '',
+  age: 25,
+  role: 'Serveur',
+  contractType: 'CDI',
+  drivingLicense: false,
+  timekeepingMethods: ['Smartphone'],
+  managerId: null,
+  startDate: new Date().toISOString().split('T')[0],
+  avatarConfig: { color: '#FF5200' }
+}
+
 export function TeamScreen({ onNext, onBack }: TeamScreenProps) {
-  const [employees] = useState<Employee[]>(defaultEmployees)
-  const [selectedEmployee, setSelectedEmployee] = useState<string | null>(null)
+  const [employees, setEmployees] = useState<Employee[]>(defaultEmployees)
+  const [viewMode, setViewMode] = useState<ViewMode>('cards')
+  const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null)
+  const [isAddingNew, setIsAddingNew] = useState(false)
+  const [formData, setFormData] = useState<Omit<Employee, 'id'>>(emptyEmployee)
+  
   const [vyvyMessage, setVyvyMessage] = useState(
-    "Voici ton equipe ! Clique sur un membre pour en savoir plus sur son contrat et son poste."
+    "Voici l'equipe de ta pizzeria ! Tu peux modifier les informations ou ajouter de nouveaux employes."
   )
 
-  const handleEmployeeClick = (employee: Employee) => {
-    setSelectedEmployee(employee.id)
-    setVyvyMessage(
-      `${employee.name} est ${employee.role}. ${
-        employee.contractType === 'CDD'
-          ? "C'est un CDD, attention aux regles specifiques !"
-          : "En CDI, un pilier de l'equipe !"
-      }`
-    )
+  const handleEditEmployee = (employee: Employee) => {
+    setEditingEmployee(employee)
+    setFormData({ ...employee })
+    setIsAddingNew(false)
+    setVyvyMessage(`Tu modifies le profil de ${employee.name}. Ces informations sont importantes pour la gestion RH !`)
   }
 
-  const selectedEmployeeData = employees.find((e) => e.id === selectedEmployee)
+  const handleAddNew = () => {
+    setEditingEmployee(null)
+    setFormData({ ...emptyEmployee })
+    setIsAddingNew(true)
+    setVyvyMessage("Super ! Tu ajoutes un nouvel employe. Remplis bien toutes les informations !")
+  }
+
+  const handleSaveEmployee = () => {
+    if (!formData.name.trim()) return
+    
+    if (isAddingNew) {
+      const newEmployee: Employee = {
+        ...formData,
+        id: crypto.randomUUID()
+      }
+      setEmployees([...employees, newEmployee])
+      setVyvyMessage(`${newEmployee.name} a rejoint l'equipe ! Bienvenue !`)
+    } else if (editingEmployee) {
+      setEmployees(employees.map(emp => 
+        emp.id === editingEmployee.id ? { ...formData, id: emp.id } : emp
+      ))
+      setVyvyMessage(`Les informations de ${formData.name} ont ete mises a jour.`)
+    }
+    
+    setEditingEmployee(null)
+    setIsAddingNew(false)
+    setFormData(emptyEmployee)
+  }
+
+  const handleDeleteEmployee = (id: string) => {
+    const emp = employees.find(e => e.id === id)
+    setEmployees(employees.filter(e => e.id !== id))
+    if (emp) {
+      setVyvyMessage(`${emp.name} a quitte l'equipe.`)
+    }
+  }
+
+  const handleTimekeepingChange = (method: TimekeepingMethod, checked: boolean) => {
+    if (checked) {
+      setFormData({
+        ...formData,
+        timekeepingMethods: [...formData.timekeepingMethods, method]
+      })
+    } else {
+      setFormData({
+        ...formData,
+        timekeepingMethods: formData.timekeepingMethods.filter(m => m !== method)
+      })
+    }
+  }
+
+  const getCharacterComponent = (employee: Employee, isHighlighted: boolean) => {
+    const props = {
+      expression: isHighlighted ? 'excited' : 'neutral' as const,
+      isHighlighted,
+      size: 'sm' as const
+    }
+    
+    switch (employee.name.toLowerCase()) {
+      case 'maria': return <Maria {...props} />
+      case 'pablo': return <Pablo {...props} />
+      case 'julie': return <Julie {...props} />
+      case 'carlos': return <Carlos {...props} />
+      default: return (
+        <div 
+          className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl"
+          style={{ backgroundColor: employee.avatarConfig.color || '#FF5200' }}
+        >
+          {employee.name.charAt(0).toUpperCase()}
+        </div>
+      )
+    }
+  }
+
+  const manager = employees.find(e => e.managerId === null)
+  const subordinates = employees.filter(e => e.managerId !== null)
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -86,14 +196,14 @@ export function TeamScreen({ onNext, onBack }: TeamScreenProps) {
         className="text-center space-y-2"
       >
         <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-          Votre equipe
+          Configuration de l'equipe
         </h2>
         <p className="text-muted-foreground max-w-xl mx-auto">
-          Decouvrez les membres de votre equipe et leurs situations contractuelles
+          Gerez votre equipe et leurs informations contractuelles
         </p>
       </motion.div>
 
-      <div className="grid lg:grid-cols-3 gap-8">
+      <div className="grid lg:grid-cols-4 gap-6">
         {/* VyvyBot sidebar */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -101,120 +211,380 @@ export function TeamScreen({ onNext, onBack }: TeamScreenProps) {
           transition={{ delay: 0.2 }}
           className="lg:col-span-1"
         >
-          <div className="sticky top-24">
-            <VyvyBot message={vyvyMessage} expression="happy" size="md" />
+          <div className="sticky top-24 space-y-4">
+            <VyvyBot message={vyvyMessage} expression="happy" size="sm" />
+            
+            {/* Stats */}
+            <Card>
+              <CardContent className="p-4 space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Employes</span>
+                  <span className="font-bold">{employees.length}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">CDI</span>
+                  <span className="font-bold">{employees.filter(e => e.contractType === 'CDI').length}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">CDD</span>
+                  <span className="font-bold">{employees.filter(e => e.contractType === 'CDD').length}</span>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </motion.div>
 
-        {/* Team grid */}
+        {/* Main content */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="lg:col-span-2 space-y-6"
+          className="lg:col-span-3 space-y-4"
         >
-          {/* Character selection */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Les membres de l'equipe</CardTitle>
-              <CardDescription>
-                Cliquez sur un personnage pour voir ses details
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap justify-center gap-6 py-4">
-                <div onClick={() => handleEmployeeClick(employees[0])}>
-                  <Maria
-                    expression={selectedEmployee === '1' ? 'excited' : 'neutral'}
-                    isHighlighted={selectedEmployee === '1'}
-                    size="md"
-                  />
-                </div>
-                <div onClick={() => handleEmployeeClick(employees[1])}>
-                  <Pablo
-                    expression={selectedEmployee === '2' ? 'excited' : 'neutral'}
-                    isHighlighted={selectedEmployee === '2'}
-                    size="md"
-                  />
-                </div>
-                <div onClick={() => handleEmployeeClick(employees[2])}>
-                  <Julie
-                    expression={selectedEmployee === '3' ? 'excited' : 'neutral'}
-                    isHighlighted={selectedEmployee === '3'}
-                    size="md"
-                  />
-                </div>
-                <div onClick={() => handleEmployeeClick(employees[3])}>
-                  <Carlos
-                    expression={selectedEmployee === '4' ? 'excited' : 'neutral'}
-                    isHighlighted={selectedEmployee === '4'}
-                    size="md"
-                  />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          {/* View toggle + Add button */}
+          <div className="flex flex-wrap justify-between items-center gap-4">
+            <div className="flex bg-muted rounded-lg p-1">
+              <Button
+                variant={viewMode === 'cards' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setViewMode('cards')}
+                className="gap-2"
+              >
+                <Users className="w-4 h-4" />
+                Fiches
+              </Button>
+              <Button
+                variant={viewMode === 'orgchart' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setViewMode('orgchart')}
+                className="gap-2"
+              >
+                <GitBranch className="w-4 h-4" />
+                Organigramme
+              </Button>
+            </div>
+            
+            <Button onClick={handleAddNew} className="gap-2">
+              <Plus className="w-4 h-4" />
+              Ajouter un employe
+            </Button>
+          </div>
 
-          {/* Employee details */}
-          {selectedEmployeeData && (
-            <motion.div
-              key={selectedEmployeeData.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <Card className="border-primary/30">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <span
-                      className="w-3 h-3 rounded-full"
-                      style={{ backgroundColor: selectedEmployeeData.avatarConfig.color }}
-                    />
-                    {selectedEmployeeData.name}
-                  </CardTitle>
-                  <CardDescription>{selectedEmployeeData.role}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid sm:grid-cols-3 gap-4">
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-muted">
-                      <Briefcase className="w-5 h-5 text-primary" />
-                      <div>
-                        <p className="text-xs text-muted-foreground">Contrat</p>
-                        <p className="font-medium">{selectedEmployeeData.contractType}</p>
-                      </div>
+          {/* Cards View */}
+          <AnimatePresence mode="wait">
+            {viewMode === 'cards' && (
+              <motion.div
+                key="cards"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                className="grid sm:grid-cols-2 gap-4"
+              >
+                {employees.map((employee, index) => (
+                  <motion.div
+                    key={employee.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <Card className="group hover:border-primary/50 transition-colors">
+                      <CardContent className="p-4">
+                        <div className="flex items-start gap-4">
+                          <div className="flex-shrink-0">
+                            {getCharacterComponent(employee, false)}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between gap-2">
+                              <div>
+                                <h3 className="font-semibold truncate">{employee.name}</h3>
+                                <p className="text-sm text-muted-foreground">{employee.role}</p>
+                              </div>
+                              <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-8 w-8"
+                                  onClick={() => handleEditEmployee(employee)}
+                                >
+                                  <Edit2 className="w-4 h-4" />
+                                </Button>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-8 w-8 text-destructive"
+                                  onClick={() => handleDeleteEmployee(employee.id)}
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </Button>
+                              </div>
+                            </div>
+                            
+                            <div className="mt-3 flex flex-wrap gap-2">
+                              <span className={`px-2 py-0.5 text-xs rounded-full ${
+                                employee.contractType === 'CDI' 
+                                  ? 'bg-green-100 text-green-700' 
+                                  : 'bg-amber-100 text-amber-700'
+                              }`}>
+                                {employee.contractType}
+                              </span>
+                              {employee.drivingLicense && (
+                                <span className="px-2 py-0.5 text-xs rounded-full bg-blue-100 text-blue-700 flex items-center gap-1">
+                                  <Car className="w-3 h-3" />
+                                  Permis
+                                </span>
+                              )}
+                            </div>
+                            
+                            <div className="mt-2 flex items-center gap-4 text-xs text-muted-foreground">
+                              <span className="flex items-center gap-1">
+                                <Calendar className="w-3 h-3" />
+                                {employee.age} ans
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Clock className="w-3 h-3" />
+                                {employee.timekeepingMethods.join(', ')}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </motion.div>
+            )}
+
+            {/* Org Chart View */}
+            {viewMode === 'orgchart' && (
+              <motion.div
+                key="orgchart"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+              >
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Organigramme</CardTitle>
+                    <CardDescription>Structure hierarchique de l'equipe</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex flex-col items-center">
+                      {/* Manager */}
+                      {manager && (
+                        <motion.div
+                          initial={{ scale: 0.9, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          className="flex flex-col items-center"
+                        >
+                          <Card 
+                            className="p-4 cursor-pointer hover:border-primary transition-colors"
+                            onClick={() => handleEditEmployee(manager)}
+                          >
+                            <div className="flex flex-col items-center gap-2">
+                              {getCharacterComponent(manager, false)}
+                              <div className="text-center">
+                                <p className="font-semibold">{manager.name}</p>
+                                <p className="text-xs text-muted-foreground">{manager.role}</p>
+                              </div>
+                            </div>
+                          </Card>
+                          
+                          {/* Connection line */}
+                          {subordinates.length > 0 && (
+                            <div className="w-0.5 h-8 bg-border" />
+                          )}
+                        </motion.div>
+                      )}
+                      
+                      {/* Subordinates */}
+                      {subordinates.length > 0 && (
+                        <div className="relative">
+                          {/* Horizontal line */}
+                          <div 
+                            className="absolute top-0 left-1/2 -translate-x-1/2 h-0.5 bg-border"
+                            style={{ width: `${Math.min(subordinates.length * 140, 500)}px` }}
+                          />
+                          
+                          <div className="flex flex-wrap justify-center gap-4 pt-8">
+                            {subordinates.map((emp, index) => (
+                              <motion.div
+                                key={emp.id}
+                                initial={{ y: 20, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ delay: index * 0.1 }}
+                                className="flex flex-col items-center"
+                              >
+                                {/* Vertical connector */}
+                                <div className="w-0.5 h-4 bg-border -mt-4 mb-2" />
+                                
+                                <Card 
+                                  className="p-3 cursor-pointer hover:border-primary transition-colors"
+                                  onClick={() => handleEditEmployee(emp)}
+                                >
+                                  <div className="flex flex-col items-center gap-2">
+                                    {getCharacterComponent(emp, false)}
+                                    <div className="text-center">
+                                      <p className="font-medium text-sm">{emp.name}</p>
+                                      <p className="text-xs text-muted-foreground">{emp.role}</p>
+                                    </div>
+                                  </div>
+                                </Card>
+                              </motion.div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-muted">
-                      <Calendar className="w-5 h-5 text-primary" />
-                      <div>
-                        <p className="text-xs text-muted-foreground">Depuis</p>
-                        <p className="font-medium">
-                          {new Date(selectedEmployeeData.startDate).toLocaleDateString('fr-FR', {
-                            month: 'short',
-                            year: 'numeric'
-                          })}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-muted">
-                      <Clock className="w-5 h-5 text-primary" />
-                      <div>
-                        <p className="text-xs text-muted-foreground">Pointage</p>
-                        <p className="font-medium capitalize">{selectedEmployeeData.timekeepingMethod}</p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          )}
+                  </CardContent>
+                </Card>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       </div>
+
+      {/* Edit/Add Dialog */}
+      <Dialog open={editingEmployee !== null || isAddingNew} onOpenChange={(open) => {
+        if (!open) {
+          setEditingEmployee(null)
+          setIsAddingNew(false)
+        }
+      }}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>
+              {isAddingNew ? 'Nouvel employe' : `Modifier ${editingEmployee?.name}`}
+            </DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Prenom</Label>
+                <Input
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="Prenom"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="age">Age</Label>
+                <Input
+                  id="age"
+                  type="number"
+                  value={formData.age}
+                  onChange={(e) => setFormData({ ...formData, age: parseInt(e.target.value) || 0 })}
+                />
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label>Role</Label>
+              <Select 
+                value={formData.role} 
+                onValueChange={(value) => setFormData({ ...formData, role: value as RoleType })}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {roleOptions.map(role => (
+                    <SelectItem key={role} value={role}>{role}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="space-y-2">
+              <Label>Type de contrat</Label>
+              <Select 
+                value={formData.contractType} 
+                onValueChange={(value) => setFormData({ ...formData, contractType: value as ContractType })}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {contractOptions.map(contract => (
+                    <SelectItem key={contract} value={contract}>{contract}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <Label htmlFor="driving">Permis de conduire</Label>
+              <Switch
+                id="driving"
+                checked={formData.drivingLicense}
+                onCheckedChange={(checked) => setFormData({ ...formData, drivingLicense: checked })}
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label>Methode de pointage</Label>
+              <div className="flex flex-wrap gap-4">
+                {timekeepingOptions.map(method => (
+                  <div key={method} className="flex items-center gap-2">
+                    <Checkbox
+                      id={method}
+                      checked={formData.timekeepingMethods.includes(method)}
+                      onCheckedChange={(checked) => handleTimekeepingChange(method, !!checked)}
+                    />
+                    <Label htmlFor={method} className="text-sm font-normal">{method}</Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label>Superieur hierarchique</Label>
+              <Select 
+                value={formData.managerId || 'none'} 
+                onValueChange={(value) => setFormData({ 
+                  ...formData, 
+                  managerId: value === 'none' ? null : value 
+                })}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Aucun (poste de direction)" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">Aucun (poste de direction)</SelectItem>
+                  {employees
+                    .filter(e => e.id !== editingEmployee?.id)
+                    .map(emp => (
+                      <SelectItem key={emp.id} value={emp.id}>{emp.name}</SelectItem>
+                    ))
+                  }
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          
+          <DialogFooter>
+            <Button variant="outline" onClick={() => {
+              setEditingEmployee(null)
+              setIsAddingNew(false)
+            }}>
+              <X className="w-4 h-4 mr-2" />
+              Annuler
+            </Button>
+            <Button onClick={handleSaveEmployee} disabled={!formData.name.trim()}>
+              <Check className="w-4 h-4 mr-2" />
+              {isAddingNew ? 'Ajouter' : 'Enregistrer'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Navigation */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="flex justify-between pt-6"
+        className="flex justify-between pt-4"
       >
         <Button variant="outline" onClick={onBack}>
           <ArrowLeft className="mr-2 w-4 h-4" />

@@ -5,128 +5,140 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { VyvyBot } from '@/components/game/vyvy-bot'
-import { Julie } from '@/components/game/characters'
+import { Pablo } from '@/components/game/characters'
 import { DecisionCard, DecisionGroup } from '@/components/game/decision-card'
-import { ArrowLeft, ArrowRight, CheckCircle2, Clock, Wallet, Users, PenTool, Baby } from 'lucide-react'
-import type { MissionJulieData } from '@/lib/types/game'
+import { ArrowLeft, ArrowRight, CheckCircle2, AlertTriangle, FileText, UserCog, Wallet } from 'lucide-react'
+import type { MissionPabloData } from '@/lib/types/game'
 
-interface JulieMissionScreenProps {
-  onComplete: (data: MissionJulieData) => void
+interface PabloMissionScreenProps {
+  onComplete: (data: MissionPabloData) => void
   onBack: () => void
 }
 
 const missionSteps = [
   {
-    id: 'congeDuree',
-    title: "Duree du conge maternite",
-    description: "Julie est enceinte ! Quelle duree de conge lui accordez-vous ?",
-    helpText: "Le conge maternite legal est de 16 semaines minimum, mais peut etre etendu.",
-    icon: <Clock className="w-5 h-5" />,
+    id: 'accidentType',
+    title: "Type d'accident",
+    description: "Pablo s'est blesse en cuisinant. Comment classez-vous cet accident ?",
+    helpText: "Le type d'accident determine les obligations legales et la prise en charge.",
+    icon: <AlertTriangle className="w-5 h-5" />,
     options: [
       {
-        id: 'legal',
-        text: "16 semaines (minimum legal)",
-        description: "6 semaines avant + 10 semaines apres",
-        hrLearning: "Le minimum legal. Certaines conventions prevoient plus."
+        id: 'travail',
+        text: "Accident de travail",
+        icon: "briefcase",
+        description: "Survenu pendant l'exercice de ses fonctions au restaurant",
+        hrLearning: "Un accident de travail doit etre declare dans les 48h a la CPAM."
       },
       {
-        id: '20',
-        text: "20 semaines",
-        description: "Un peu plus que le legal",
-        hrLearning: "Un geste apprecie qui fidelise les salariees."
+        id: 'trajet',
+        text: "Accident de trajet",
+        icon: "car",
+        description: "Survenu sur le trajet domicile-travail",
+        hrLearning: "L'accident de trajet a un regime specifique, different de l'accident de travail."
       },
       {
-        id: '24',
-        text: "24 semaines",
-        description: "Conge etendu genereux",
-        hrLearning: "Politique familiale avantageuse, mais cout plus eleve."
+        id: 'horsPoste',
+        text: "Accident hors poste",
+        icon: "home",
+        description: "Survenu en dehors du temps de travail",
+        hrLearning: "Hors temps de travail = arret maladie classique, pas d'accident de travail."
       }
     ]
   },
   {
-    id: 'congeSalaire',
+    id: 'accidentDeclaration',
+    title: "Qui fait la declaration ?",
+    description: "L'accident doit etre declare officiellement. Qui s'en charge ?",
+    helpText: "La declaration est obligatoire et engage la responsabilite de l'employeur.",
+    icon: <FileText className="w-5 h-5" />,
+    options: [
+      {
+        id: 'moi',
+        text: "Je m'en charge personnellement",
+        icon: "user",
+        description: "En tant que gerant, je fais la declaration moi-meme",
+        hrLearning: "L'employeur est responsable de la declaration dans les 48h."
+      },
+      {
+        id: 'fiduciaire',
+        text: "Ma fiduciaire / comptable",
+        icon: "building",
+        description: "Je delegue a mon cabinet comptable",
+        hrLearning: "Deleguer est possible mais l'employeur reste responsable du delai."
+      },
+      {
+        id: 'rh',
+        text: "Service RH externe (Vysual)",
+        icon: "users",
+        description: "Vysual gere la declaration pour moi",
+        hrLearning: "Un service RH peut gerer, mais doit avoir les informations rapidement."
+      }
+    ]
+  },
+  {
+    id: 'accidentRemplacement',
+    title: "Remplacement de Pablo",
+    description: "Pablo sera absent 2 semaines. Comment gerez-vous son absence ?",
+    helpText: "Le choix impacte la continuite du service et les couts.",
+    icon: <UserCog className="w-5 h-5" />,
+    options: [
+      {
+        id: 'interimaire',
+        text: "Recruter un interimaire",
+        icon: "user-plus",
+        description: "Faire appel a une agence d'interim",
+        hrLearning: "L'interim permet une flexibilite mais a un cout plus eleve."
+      },
+      {
+        id: 'heuresSup',
+        text: "Heures supplementaires equipe",
+        icon: "clock",
+        description: "Repartir le travail sur l'equipe existante",
+        hrLearning: "Les heures sup sont reglementees : max 220h/an, majorees de 25% a 50%."
+      },
+      {
+        id: 'rien',
+        text: "Reduire l'activite",
+        icon: "minus-circle",
+        description: "Adapter le service le temps de l'absence",
+        hrLearning: "Solution economique mais peut impacter la qualite de service."
+      }
+    ]
+  },
+  {
+    id: 'accidentSalaire',
     title: "Maintien de salaire",
-    description: "Comment gerez-vous le salaire de Julie pendant son conge ?",
-    helpText: "Les indemnites journalieres de la Secu ne couvrent pas toujours 100% du salaire.",
+    description: "Pendant l'arret de Pablo, comment gerez-vous son salaire ?",
+    helpText: "Le maintien de salaire depend de la convention collective et de l'anciennete.",
     icon: <Wallet className="w-5 h-5" />,
     options: [
       {
         id: 'complet',
         text: "Maintien a 100%",
-        description: "Je complete les IJSS pour atteindre 100%",
-        hrLearning: "Tres apprecie, favorise le retour au travail serein."
+        icon: "check-circle",
+        description: "Je complete les indemnites CPAM pour atteindre 100%",
+        hrLearning: "Genereux mais pas obligatoire, cela fidelise les employes."
       },
       {
         id: 'partiel',
-        text: "Maintien partiel (80%)",
-        description: "Je complete partiellement les IJSS",
-        hrLearning: "Compromis raisonnable entre generosite et couts."
+        text: "Maintien partiel",
+        icon: "percent",
+        description: "Je complete partiellement (ex: 80%)",
+        hrLearning: "Un compromis entre fidelisation et gestion des couts."
       },
       {
         id: 'ijss',
         text: "IJSS uniquement",
-        description: "Julie ne recoit que les indemnites Secu",
-        hrLearning: "Legal mais peut etre difficile financierement."
-      }
-    ]
-  },
-  {
-    id: 'congeRemplacement',
-    title: "Remplacement pendant l'absence",
-    description: "Comment remplacez-vous Julie pendant son conge ?",
-    helpText: "Le choix impacte la continuite du service et le retour de Julie.",
-    icon: <Users className="w-5 h-5" />,
-    options: [
-      {
-        id: 'interne',
-        text: "Promotion interne temporaire",
-        description: "Un collegue prend le poste temporairement",
-        hrLearning: "Valorise l'equipe mais attention a la charge de travail."
-      },
-      {
-        id: 'cdd',
-        text: "CDD de remplacement",
-        description: "Recruter un CDD specifique",
-        hrLearning: "Solution courante, le CDD peut durer jusqu'au retour."
-      },
-      {
-        id: 'interim',
-        text: "Interim",
-        description: "Faire appel a une agence d'interim",
-        hrLearning: "Flexible mais cout plus eleve qu'un CDD."
-      }
-    ]
-  },
-  {
-    id: 'workflowValidation',
-    title: "Qui valide les demandes ?",
-    description: "Qui est responsable de valider les conges maternite ?",
-    helpText: "La validation implique des responsabilites juridiques.",
-    icon: <PenTool className="w-5 h-5" />,
-    options: [
-      {
-        id: 'moi',
-        text: "Moi (gerant)",
-        description: "Je valide personnellement",
-        hrLearning: "Controle total mais charge administrative."
-      },
-      {
-        id: 'rh',
-        text: "Service RH (Vysual)",
-        description: "Vysual gere les validations",
-        hrLearning: "Delegue la charge, expertise RH garantie."
-      },
-      {
-        id: 'fiduciaire',
-        text: "Fiduciaire / Comptable",
-        description: "Mon cabinet gere",
-        hrLearning: "Possible mais moins specialise en RH."
+        icon: "file-text",
+        description: "Pablo ne recoit que les indemnites de la Secu",
+        hrLearning: "Legal mais peut etre mal percu par l'employe."
       }
     ]
   }
 ]
 
-export function JulieMissionScreen({ onComplete, onBack }: JulieMissionScreenProps) {
+export function PabloMissionScreen({ onComplete, onBack }: PabloMissionScreenProps) {
   const [currentStep, setCurrentStep] = useState(0)
   const [decisions, setDecisions] = useState<Record<string, string>>({})
   const [showResult, setShowResult] = useState(false)
@@ -150,11 +162,11 @@ export function JulieMissionScreen({ onComplete, onBack }: JulieMissionScreenPro
   }
 
   const handleComplete = () => {
-    const data: MissionJulieData = {
-      congeDuree: decisions.congeDuree || '',
-      congeSalaire: decisions.congeSalaire || '',
-      congeRemplacement: decisions.congeRemplacement || '',
-      workflowValidation: decisions.workflowValidation || ''
+    const data: MissionPabloData = {
+      accidentType: decisions.accidentType || '',
+      accidentDeclaration: decisions.accidentDeclaration || '',
+      accidentRemplacement: decisions.accidentRemplacement || '',
+      accidentSalaire: decisions.accidentSalaire || ''
     }
     onComplete(data)
   }
@@ -163,19 +175,19 @@ export function JulieMissionScreen({ onComplete, onBack }: JulieMissionScreenPro
 
   const getVyvyMessage = () => {
     if (showResult) {
-      return "Parfait ! Tu as configure la gestion des conges maternite. Ces choix seront enregistres dans ta configuration RH."
+      return "Excellent ! Tu as bien gere l'accident de Pablo. Ces choix seront enregistres dans ta configuration RH."
     }
     if (selectedOption) {
       return selectedOption.hrLearning
     }
-    return step?.helpText || "Une belle nouvelle qui demande une bonne organisation !"
+    return step?.helpText || "Reflechis bien, c'est une situation delicate..."
   }
 
-  const getJulieExpression = () => {
+  const getPabloExpression = () => {
     if (showResult) return 'happy'
     if (currentStep === 0) return 'worried'
-    if (selectedOption) return 'excited'
-    return 'neutral'
+    if (selectedOption) return 'neutral'
+    return 'worried'
   }
 
   if (showResult) {
@@ -196,12 +208,12 @@ export function JulieMissionScreen({ onComplete, onBack }: JulieMissionScreenPro
         animate={{ opacity: 1, y: 0 }}
         className="text-center space-y-2"
       >
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-sm mb-2">
-          <Baby className="w-4 h-4" />
-          Bonne nouvelle !
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-sm mb-2">
+          <AlertTriangle className="w-4 h-4" />
+          Situation de crise
         </div>
         <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-          Mission : Conge maternite de Julie
+          Mission : Accident de Pablo
         </h2>
         <p className="text-muted-foreground">
           Etape {currentStep + 1} sur {missionSteps.length}
@@ -211,7 +223,7 @@ export function JulieMissionScreen({ onComplete, onBack }: JulieMissionScreenPro
       {/* Progress bar */}
       <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
         <motion.div
-          className="h-full bg-purple-500"
+          className="h-full bg-amber-500"
           initial={{ width: 0 }}
           animate={{ width: `${((currentStep + 1) / missionSteps.length) * 100}%` }}
           transition={{ duration: 0.3 }}
@@ -219,21 +231,27 @@ export function JulieMissionScreen({ onComplete, onBack }: JulieMissionScreenPro
       </div>
 
       <div className="grid lg:grid-cols-3 gap-8">
-        {/* Left side - Julie and VyvyBot */}
+        {/* Left side - Pablo and VyvyBot */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           className="space-y-6"
         >
-          {/* Julie */}
-          <Card className="border-purple-200 bg-purple-50/50">
-            <CardContent className="pt-6 flex flex-col items-center">
-              <Julie expression={getJulieExpression()} size="lg" />
+          {/* Pablo with injury indicator */}
+          <Card className="border-amber-200 bg-amber-50/50">
+            <CardContent className="pt-6 flex flex-col items-center relative">
+              <div className="absolute top-4 right-4">
+                <span className="flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
+                </span>
+              </div>
+              <Pablo expression={getPabloExpression()} size="lg" />
               <p className="mt-4 text-sm text-muted-foreground text-center italic">
-                {currentStep === 0 && '"J\'ai une grande nouvelle... Je suis enceinte !"'}
-                {currentStep === 1 && '"Comment ca va se passer pour mon salaire ?"'}
-                {currentStep === 2 && '"Qui va me remplacer pendant mon absence ?"'}
-                {currentStep === 3 && '"A qui dois-je faire mes demandes ?"'}
+                {currentStep === 0 && '"Aie ! Je me suis coupe en preparant les pizzas..."'}
+                {currentStep === 1 && '"Il faut que je voie un medecin, c\'est assez profond."'}
+                {currentStep === 2 && '"Je suis desole, je vais devoir m\'absenter..."'}
+                {currentStep === 3 && '"Comment ca va se passer pour mon salaire ?"'}
               </p>
             </CardContent>
           </Card>
@@ -263,7 +281,7 @@ export function JulieMissionScreen({ onComplete, onBack }: JulieMissionScreenPro
               <Card>
                 <CardHeader>
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center text-purple-700">
+                    <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-700">
                       {step.icon}
                     </div>
                     <CardTitle>{step.title}</CardTitle>
@@ -323,26 +341,10 @@ interface ResultScreenProps {
 
 function ResultScreen({ decisions, onComplete, onBack }: ResultScreenProps) {
   const summary = [
-    { 
-      label: "Duree du conge", 
-      value: decisions.congeDuree === 'legal' ? '16 semaines (legal)' : 
-             decisions.congeDuree === '20' ? '20 semaines' : '24 semaines'
-    },
-    { 
-      label: "Maintien salaire", 
-      value: decisions.congeSalaire === 'complet' ? 'Maintien 100%' : 
-             decisions.congeSalaire === 'partiel' ? 'Maintien 80%' : 'IJSS uniquement'
-    },
-    { 
-      label: "Remplacement", 
-      value: decisions.congeRemplacement === 'interne' ? 'Promotion interne' : 
-             decisions.congeRemplacement === 'cdd' ? 'CDD remplacement' : 'Interim'
-    },
-    { 
-      label: "Validation par", 
-      value: decisions.workflowValidation === 'moi' ? 'Gerant' : 
-             decisions.workflowValidation === 'rh' ? 'Service RH' : 'Fiduciaire'
-    }
+    { label: "Type d'accident", value: decisions.accidentType === 'travail' ? 'Accident de travail' : decisions.accidentType === 'trajet' ? 'Accident de trajet' : 'Hors poste' },
+    { label: "Declaration par", value: decisions.accidentDeclaration === 'moi' ? 'Moi-meme' : decisions.accidentDeclaration === 'fiduciaire' ? 'Fiduciaire' : 'Service RH' },
+    { label: "Remplacement", value: decisions.accidentRemplacement === 'interimaire' ? 'Interimaire' : decisions.accidentRemplacement === 'heuresSup' ? 'Heures sup' : 'Reduction activite' },
+    { label: "Salaire", value: decisions.accidentSalaire === 'complet' ? 'Maintien 100%' : decisions.accidentSalaire === 'partiel' ? 'Maintien partiel' : 'IJSS uniquement' }
   ]
 
   return (
@@ -356,15 +358,15 @@ function ResultScreen({ decisions, onComplete, onBack }: ResultScreenProps) {
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: 'spring', delay: 0.2 }}
-          className="w-20 h-20 mx-auto rounded-full bg-purple-100 flex items-center justify-center"
+          className="w-20 h-20 mx-auto rounded-full bg-amber-100 flex items-center justify-center"
         >
-          <CheckCircle2 className="w-10 h-10 text-purple-600" />
+          <CheckCircle2 className="w-10 h-10 text-amber-600" />
         </motion.div>
         <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-          Configuration terminee !
+          Situation geree !
         </h2>
         <p className="text-muted-foreground max-w-xl mx-auto">
-          Le conge maternite de Julie est maintenant configure selon vos preferences.
+          Vous avez configure la gestion des accidents de travail pour votre pizzeria.
         </p>
       </motion.div>
 

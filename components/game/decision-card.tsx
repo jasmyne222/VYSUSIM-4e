@@ -7,6 +7,7 @@ import { Check } from 'lucide-react'
 interface DecisionCardProps {
   id: string
   text: string
+  description?: string
   icon?: React.ReactNode
   isSelected?: boolean
   isDisabled?: boolean
@@ -17,6 +18,7 @@ interface DecisionCardProps {
 
 export function DecisionCard({
   text,
+  description,
   icon,
   isSelected = false,
   isDisabled = false,
@@ -67,6 +69,10 @@ export function DecisionCard({
           {icon && <span className="text-lg">{icon}</span>}
           <p className="font-medium text-foreground leading-relaxed">{text}</p>
         </div>
+        
+        {description && (
+          <p className="mt-1 text-sm text-muted-foreground">{description}</p>
+        )}
 
         {/* Consequence reveal on selection */}
         {isSelected && consequence && (

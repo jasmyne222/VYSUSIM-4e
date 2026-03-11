@@ -1,6 +1,14 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { GameScreen, Employee, GameDecision, GameSession } from '@/lib/types/game'
+import type { 
+  GameScreen, 
+  Employee, 
+  GameSession,
+  OrgChartNode,
+  MissionJulieData,
+  MissionPabloData,
+  MissionDismissalData
+} from '@/lib/types/game'
 
 interface GameStore {
   // State
@@ -11,10 +19,24 @@ interface GameStore {
   // Actions
   setScreen: (screen: GameScreen) => void
   startNewGame: () => void
+  
+  // Team actions
   updateTeam: (employees: Employee[]) => void
-  addDecision: (decision: Omit<GameDecision, 'id' | 'sessionId' | 'createdAt'>) => void
+  addEmployee: (employee: Employee) => void
+  updateEmployee: (id: string, updates: Partial<Employee>) => void
+  removeEmployee: (id: string) => void
+  updateOrgChart: (orgChart: OrgChartNode[]) => void
+  
+  // Mission actions
+  saveMissionJulie: (data: MissionJulieData) => void
+  saveMissionPablo: (data: MissionPabloData) => void
+  saveMissionDismissal: (data: MissionDismissalData) => void
+  
   completeGame: () => void
   resetGame: () => void
+  
+  // Getters
+  getReportData: () => GameSession | null
 }
 
 const createNewSession = (): GameSession => ({
@@ -24,7 +46,10 @@ const createNewSession = (): GameSession => ({
   status: 'in_progress',
   currentScreen: 'welcome',
   teamConfig: [],
-  decisions: [],
+  orgChart: [],
+  missionJulie: null,
+  missionPablo: null,
+  missionDismissal: null,
   metadata: {}
 })
 
@@ -70,19 +95,93 @@ export const useGameStore = create<GameStore>()(
         }
       },
 
-      addDecision: (decision) => {
+      addEmployee: (employee) => {
         const session = get().session
         if (session) {
-          const newDecision: GameDecision = {
-            ...decision,
-            id: crypto.randomUUID(),
-            sessionId: session.id,
-            createdAt: new Date().toISOString()
-          }
           set({
             session: {
               ...session,
-              decisions: [...session.decisions, newDecision],
+              teamConfig: [...session.teamConfig, employee],
+              updatedAt: new Date().toISOString()
+            }
+          })
+        }
+      },
+
+      updateEmployee: (id, updates) => {
+        const session = get().session
+        if (session) {
+          set({
+            session: {
+              ...session,
+              teamConfig: session.teamConfig.map(emp =>
+                emp.id === id ? { ...emp, ...updates } : emp
+              ),
+              updatedAt: new Date().toISOString()
+            }
+          })
+        }
+      },
+
+      removeEmployee: (id) => {
+        const session = get().session
+        if (session) {
+          set({
+            session: {
+              ...session,
+              teamConfig: session.teamConfig.filter(emp => emp.id !== id),
+              updatedAt: new Date().toISOString()
+            }
+          })
+        }
+      },
+
+      updateOrgChart: (orgChart) => {
+        const session = get().session
+        if (session) {
+          set({
+            session: {
+              ...session,
+              orgChart,
+              updatedAt: new Date().toISOString()
+            }
+          })
+        }
+      },
+
+      saveMissionJulie: (data) => {
+        const session = get().session
+        if (session) {
+          set({
+            session: {
+              ...session,
+              missionJulie: data,
+              updatedAt: new Date().toISOString()
+            }
+          })
+        }
+      },
+
+      saveMissionPablo: (data) => {
+        const session = get().session
+        if (session) {
+          set({
+            session: {
+              ...session,
+              missionPablo: data,
+              updatedAt: new Date().toISOString()
+            }
+          })
+        }
+      },
+
+      saveMissionDismissal: (data) => {
+        const session = get().session
+        if (session) {
+          set({
+            session: {
+              ...session,
+              missionDismissal: data,
               updatedAt: new Date().toISOString()
             }
           })
@@ -107,6 +206,10 @@ export const useGameStore = create<GameStore>()(
           session: null,
           currentScreen: 'welcome'
         })
+      },
+
+      getReportData: () => {
+        return get().session
       }
     }),
     {
