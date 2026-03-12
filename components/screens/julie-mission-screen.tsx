@@ -147,12 +147,19 @@ export function JulieMissionScreen({ onComplete, onBack }: JulieMissionScreenPro
 
   const getVyvyMessage = () => {
     if (showResult) {
-      return "Parfait ! Tu as configure la gestion des conges maternite. Ces choix seront enregistres dans ta configuration RH."
+      return "Parfait ! Vous avez configure la gestion des conges maternite. Passons a la situation suivante."
     }
     if (selectedOption) {
-      return selectedOption.hrLearning
+      return "Bon choix ! Cliquez sur 'Suivant' pour continuer."
     }
-    return step?.helpText || "Une belle nouvelle qui demande une bonne organisation !"
+    // Guide messages for each step
+    const guides: Record<string, string> = {
+      'congeDuree': "Cliquez sur l'option qui correspond a votre politique d'entreprise.",
+      'congeSalaire': "Choisissez comment vous gerez le salaire pendant le conge.",
+      'congeRemplacement': "Comment souhaitez-vous remplacer l'employee absente ?",
+      'workflowValidation': "Qui sera responsable de valider les demandes de conge ?"
+    }
+    return guides[step?.id] || "Selectionnez une option ci-dessus."
   }
 
   const getJulieExpression = () => {

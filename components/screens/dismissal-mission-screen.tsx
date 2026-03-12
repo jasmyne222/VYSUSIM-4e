@@ -195,12 +195,20 @@ export function DismissalMissionScreen({ employees, onComplete, onBack }: Dismis
 
   const getVyvyMessage = () => {
     if (showResult) {
-      return "La procedure de depart est configuree. Ces parametres guideront Vysual pour gerer les fins de contrat."
+      return "Parfait ! Vous avez configure la gestion des fins de contrat. Le recapitulatif va s'afficher."
     }
     if (selectedOption) {
-      return selectedOption.hrLearning || ''
+      return "Bien note ! Cliquez sur 'Suivant' pour continuer."
     }
-    return step.helpText || "Une decision importante qui doit etre bien reflechie..."
+    // Guide messages for each step
+    const guides: Record<string, string> = {
+      'employeeName': "Selectionnez l'employe concerne par cette procedure.",
+      'motif': "Quel est le motif de la fin de contrat ?",
+      'preavis': "Quelle duree de preavis souhaitez-vous appliquer ?",
+      'solde': "Cochez les elements a inclure dans le solde de tout compte.",
+      'signataire': "Qui sera responsable de signer les documents officiels ?"
+    }
+    return guides[step?.id] || "Selectionnez une option ci-dessus."
   }
 
   if (showResult) {

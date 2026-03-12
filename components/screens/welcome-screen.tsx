@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { VyvyBot } from '@/components/game/vyvy-bot'
-import { ArrowRight, Users, Building2, Award } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 
 interface WelcomeScreenProps {
   onStart: () => void
@@ -11,15 +11,15 @@ interface WelcomeScreenProps {
 
 export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
   return (
-    <div className="min-h-[80vh] flex flex-col items-center justify-center gap-10 py-12">
-      {/* Hero Section - Swiss corporate style */}
+    <div className="min-h-[80vh] flex flex-col items-center justify-center gap-8 py-8 px-4">
+      {/* Hero Section - Clear and accessible */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center space-y-6"
+        className="text-center space-y-4"
       >
         <motion.h1
-          className="text-4xl md:text-6xl font-semibold text-foreground text-balance leading-tight tracking-tight"
+          className="text-3xl md:text-5xl font-semibold text-foreground text-balance leading-tight tracking-tight"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
@@ -27,75 +27,74 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
           <span className="text-primary font-bold">VYSUSIM</span><br />
           Simulateur RH interactif
         </motion.h1>
-        <motion.p
-          className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto text-pretty leading-relaxed"
+        
+        {/* Duration badge - clear expectation */}
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
+          transition={{ delay: 0.3 }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted text-muted-foreground text-sm"
         >
-          30 minutes pour vivre des situations RH concretes. Identifiez vos vrais besoins pour que Vysual puisse creer votre solution sur-mesure.
-        </motion.p>
+          <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+          Duree : environ 30 minutes
+        </motion.div>
       </motion.div>
 
-      {/* VyvyBot Introduction */}
+      {/* VyvyBot Introduction - Main guidance */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.6 }}
-        className="my-4"
+        transition={{ delay: 0.5 }}
+        className="my-2 max-w-xl"
       >
         <VyvyBot
-          message="Bienvenue dans VYSUSIM ! Vous allez gerer une pizzeria et faire face a des situations RH reelles. Vos reponses nous aideront a creer votre solution Vysual sur-mesure."
+          message="Bonjour ! Je suis Vyvy, votre guide. Ensemble, nous allons simuler la gestion RH d'une pizzeria. A chaque etape, je vous expliquerai quoi faire. C'est parti !"
           expression="happy"
           size="lg"
         />
       </motion.div>
 
-      {/* Features - Clean card design */}
+      {/* Simple steps - very clear for non-tech users */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8 }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-4xl w-full"
+        transition={{ delay: 0.7 }}
+        className="w-full max-w-2xl"
       >
-        <FeatureCard
-          icon={<Users className="w-5 h-5" />}
-          title="Composez votre equipe"
-          description="4 employes avec contrats et roles"
-          delay={0.9}
-        />
-        <FeatureCard
-          icon={<Building2 className="w-5 h-5" />}
-          title="Affrontez 3 crises RH"
-          description="Maternite, accident travail, licenciement"
-          delay={1.0}
-        />
-        <FeatureCard
-          icon={<Award className="w-5 h-5" />}
-          title="Comprenez le 'pourquoi'"
-          description="Contexte HR pour chaque decision"
-          delay={1.1}
-        />
+        <div className="bg-card border border-border rounded-xl p-6">
+          <h2 className="text-lg font-semibold text-foreground mb-4 text-center">
+            Comment ca fonctionne ?
+          </h2>
+          <div className="space-y-4">
+            <StepItem number={1} text="Vous decouvrez votre equipe de 4 employes" />
+            <StepItem number={2} text="Vous faites face a 3 situations RH reelles" />
+            <StepItem number={3} text="A chaque etape, vous choisissez parmi plusieurs options" />
+            <StepItem number={4} text="A la fin, un recapitulatif de vos choix est genere" />
+          </div>
+        </div>
       </motion.div>
 
-      {/* CTA Button - Vysual style */}
+      {/* CTA Button - Large and clear */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.2 }}
-        className="mt-6"
+        transition={{ delay: 0.9 }}
+        className="mt-4 flex flex-col items-center gap-3"
       >
         <Button
-          size="lg"
+          size="xl"
           onClick={onStart}
-          className="group px-8 py-5 text-base font-semibold rounded-lg hover:opacity-90 transition-opacity"
+          className="group font-semibold shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
         >
-          Commencer
-          <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          Commencer le simulateur
+          <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
         </Button>
+        <p className="text-sm text-muted-foreground">
+          Cliquez sur le bouton orange pour demarrer
+        </p>
       </motion.div>
 
-      {/* Subtle background - minimal Swiss style */}
+      {/* Subtle background */}
       <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-gradient-to-bl from-primary/3 to-transparent" />
         <div className="absolute bottom-0 left-0 w-1/4 h-1/3 bg-gradient-to-tr from-muted/50 to-transparent" />
@@ -104,27 +103,13 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
   )
 }
 
-interface FeatureCardProps {
-  icon: React.ReactNode
-  title: string
-  description: string
-  delay: number
-}
-
-function FeatureCard({ icon, title, description, delay }: FeatureCardProps) {
+function StepItem({ number, text }: { number: number; text: string }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay }}
-      whileHover={{ y: -2, transition: { duration: 0.2 } }}
-      className="p-5 rounded-lg bg-card border border-border hover:border-primary/40 hover:shadow-sm transition-all"
-    >
-      <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center text-primary mb-3">
-        {icon}
+    <div className="flex items-center gap-4">
+      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary font-semibold flex items-center justify-center text-sm">
+        {number}
       </div>
-      <h3 className="font-medium text-foreground mb-1.5">{title}</h3>
-      <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
-    </motion.div>
+      <p className="text-foreground">{text}</p>
+    </div>
   )
 }

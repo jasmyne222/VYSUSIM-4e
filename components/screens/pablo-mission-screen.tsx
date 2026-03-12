@@ -147,12 +147,19 @@ export function PabloMissionScreen({ onComplete, onBack }: PabloMissionScreenPro
 
   const getVyvyMessage = () => {
     if (showResult) {
-      return "Excellent ! Tu as bien gere l'accident de Pablo. Ces choix seront enregistres dans ta configuration RH."
+      return "Excellent ! Vous avez configure la gestion des accidents. Passons a la derniere situation."
     }
     if (selectedOption) {
-      return selectedOption.hrLearning
+      return "Bien note ! Cliquez sur 'Suivant' pour continuer."
     }
-    return step?.helpText || "Reflechis bien, c'est une situation delicate..."
+    // Guide messages for each step
+    const guides: Record<string, string> = {
+      'accidentType': "Selectionnez le type d'accident qui s'applique a cette situation.",
+      'accidentDeclaration': "Qui s'occupe des declarations officielles dans votre entreprise ?",
+      'accidentRemplacement': "Comment gerez-vous l'absence temporaire d'un employe ?",
+      'accidentSalaire': "Quelle est votre politique de maintien de salaire ?"
+    }
+    return guides[step?.id] || "Selectionnez une option ci-dessus."
   }
 
   const getPabloExpression = () => {

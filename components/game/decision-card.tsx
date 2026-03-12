@@ -33,26 +33,26 @@ export function DecisionCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1, duration: 0.3 }}
-      whileHover={!isDisabled ? { scale: 1.02, y: -2 } : {}}
-      whileTap={!isDisabled ? { scale: 0.98 } : {}}
+      whileHover={!isDisabled ? { scale: 1.01 } : {}}
+      whileTap={!isDisabled ? { scale: 0.99 } : {}}
       onClick={onClick}
       disabled={isDisabled}
       className={cn(
-        'relative w-full text-left p-4 rounded-lg border transition-all duration-200',
-        'flex items-start gap-3',
+        'relative w-full text-left p-5 rounded-xl border-2 transition-all duration-200',
+        'flex items-start gap-4',
         isSelected
-          ? 'border-primary bg-primary/5 shadow-sm'
-          : 'border-border bg-card hover:border-primary/40 hover:bg-muted/30',
+          ? 'border-primary bg-primary/5 shadow-md'
+          : 'border-border bg-card hover:border-primary/50 hover:shadow-sm',
         isDisabled && 'opacity-50 cursor-not-allowed'
       )}
     >
-      {/* Selection indicator */}
+      {/* Selection indicator - larger and clearer */}
       <motion.div
         className={cn(
-          'flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center',
-          isSelected ? 'border-primary bg-primary' : 'border-muted-foreground/30'
+          'flex-shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center mt-0.5',
+          isSelected ? 'border-primary bg-primary' : 'border-muted-foreground/40'
         )}
-        animate={isSelected ? { scale: [1, 1.2, 1] } : {}}
+        animate={isSelected ? { scale: [1, 1.15, 1] } : {}}
         transition={{ duration: 0.3 }}
       >
         {isSelected && (
@@ -68,23 +68,23 @@ export function DecisionCard({
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          {icon && <span className="text-lg">{icon}</span>}
-          <p className="font-medium text-foreground leading-relaxed">{text}</p>
+          {icon && <span className="text-xl">{icon}</span>}
+          <p className="font-semibold text-foreground text-base leading-relaxed">{text}</p>
         </div>
         
         {description && (
-          <p className="mt-1 text-sm text-muted-foreground">{description}</p>
+          <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">{description}</p>
         )}
 
-        {/* HR Learning Context */}
-        {hrContext && (
+        {/* HR Learning Context - shows when selected */}
+        {isSelected && hrContext && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
-            className="mt-2 p-2 rounded bg-muted/50 flex items-start gap-2"
+            className="mt-3 p-3 rounded-lg bg-primary/5 border border-primary/10 flex items-start gap-2"
           >
-            <span className="text-base flex-shrink-0">💡</span>
-            <p className="text-xs text-muted-foreground leading-relaxed">{hrContext}</p>
+            <span className="text-lg flex-shrink-0">💡</span>
+            <p className="text-sm text-foreground/80 leading-relaxed">{hrContext}</p>
           </motion.div>
         )}
 
@@ -100,14 +100,15 @@ export function DecisionCard({
         )}
       </div>
 
-      {/* Subtle highlight when selected - Vysual style */}
+      {/* Selected label */}
       {isSelected && (
-        <motion.div
-          className="absolute inset-0 rounded-lg bg-primary/3 -z-10"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-        />
+        <motion.span
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="absolute top-3 right-3 text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded"
+        >
+          Selectionne
+        </motion.span>
       )}
     </motion.button>
   )

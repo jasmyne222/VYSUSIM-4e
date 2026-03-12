@@ -108,15 +108,15 @@ export function ReportScreen({ session, onRestart }: ReportScreenProps) {
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: 'spring', delay: 0.3 }}
-          className="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center"
+          className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center"
         >
-          <Sparkles className="w-12 h-12 text-white" />
+          <CheckCircle2 className="w-10 h-10 text-white" />
         </motion.div>
         <h2 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
-          Felicitations !
+          Simulation terminee
         </h2>
         <p className="text-muted-foreground max-w-xl mx-auto">
-          Votre configuration RH est complete. Voici le resume de toutes les informations collectees.
+          Voici le recapitulatif de vos besoins RH. Ces informations permettront a Vysual de configurer votre solution sur-mesure.
         </p>
       </motion.div>
 
@@ -161,8 +161,8 @@ export function ReportScreen({ session, onRestart }: ReportScreenProps) {
           transition={{ delay: 0.3 }}
         >
           <VyvyBot
-            message="Bravo ! Tu as configure toute ta gestion RH en jouant. Vysual est maintenant pret a t'accompagner !"
-            expression="excited"
+            message="Bravo ! Vous avez complete la simulation. Ces informations vont permettre a Vysual de creer votre solution RH sur-mesure."
+            expression="happy"
             size="md"
           />
         </motion.div>
@@ -230,115 +230,95 @@ export function ReportScreen({ session, onRestart }: ReportScreenProps) {
             </CardContent>
           </Card>
 
-          {/* Mission Julie */}
+          {/* Mission Julie - Formal questionnaire format */}
           {session?.missionJulie && (
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Baby className="w-5 h-5 text-purple-500" />
-                  Conge maternite (Julie)
+                  <Baby className="w-5 h-5 text-primary" />
+                  Gestion des conges maternite
                 </CardTitle>
+                <CardDescription>Vos preferences pour la gestion des absences maternite</CardDescription>
               </CardHeader>
-              <CardContent>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <DataItem 
-                    icon={<Clock className="w-4 h-4" />}
-                    label="Duree" 
-                    value={formatDuration(session.missionJulie.congeDuree)} 
-                  />
-                  <DataItem 
-                    icon={<Wallet className="w-4 h-4" />}
-                    label="Salaire" 
-                    value={formatSalary(session.missionJulie.congeSalaire)} 
-                  />
-                  <DataItem 
-                    icon={<Users className="w-4 h-4" />}
-                    label="Remplacement" 
-                    value={formatReplacement(session.missionJulie.congeRemplacement)} 
-                  />
-                  <DataItem 
-                    icon={<PenTool className="w-4 h-4" />}
-                    label="Validation" 
-                    value={formatValidation(session.missionJulie.workflowValidation)} 
-                  />
-                </div>
+              <CardContent className="space-y-4">
+                <QuestionItem 
+                  question="Quelle duree de conge maternite souhaitez-vous accorder ?"
+                  answer={formatDuration(session.missionJulie.congeDuree)} 
+                />
+                <QuestionItem 
+                  question="Quel maintien de salaire pendant le conge ?"
+                  answer={formatSalary(session.missionJulie.congeSalaire)} 
+                />
+                <QuestionItem 
+                  question="Comment souhaitez-vous gerer le remplacement ?"
+                  answer={formatReplacement(session.missionJulie.congeRemplacement)} 
+                />
+                <QuestionItem 
+                  question="Qui valide les demandes de conge maternite ?"
+                  answer={formatValidation(session.missionJulie.workflowValidation)} 
+                />
               </CardContent>
             </Card>
           )}
 
-          {/* Mission Pablo */}
+          {/* Mission Pablo - Formal questionnaire format */}
           {session?.missionPablo && (
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Ambulance className="w-5 h-5 text-amber-500" />
-                  Accident de travail (Pablo)
+                  <Ambulance className="w-5 h-5 text-primary" />
+                  Gestion des accidents de travail
                 </CardTitle>
+                <CardDescription>Vos preferences pour la gestion des accidents</CardDescription>
               </CardHeader>
-              <CardContent>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <DataItem 
-                    icon={<AlertTriangle className="w-4 h-4" />}
-                    label="Type" 
-                    value={formatAccidentType(session.missionPablo.accidentType)} 
-                  />
-                  <DataItem 
-                    icon={<FileText className="w-4 h-4" />}
-                    label="Declaration" 
-                    value={formatDeclaration(session.missionPablo.accidentDeclaration)} 
-                  />
-                  <DataItem 
-                    icon={<Users className="w-4 h-4" />}
-                    label="Remplacement" 
-                    value={formatAccidentReplacement(session.missionPablo.accidentRemplacement)} 
-                  />
-                  <DataItem 
-                    icon={<Wallet className="w-4 h-4" />}
-                    label="Salaire" 
-                    value={formatAccidentSalary(session.missionPablo.accidentSalaire)} 
-                  />
-                </div>
+              <CardContent className="space-y-4">
+                <QuestionItem 
+                  question="Comment classifiez-vous les accidents ?"
+                  answer={formatAccidentType(session.missionPablo.accidentType)} 
+                />
+                <QuestionItem 
+                  question="Qui effectue les declarations d'accident ?"
+                  answer={formatDeclaration(session.missionPablo.accidentDeclaration)} 
+                />
+                <QuestionItem 
+                  question="Comment gerez-vous le remplacement temporaire ?"
+                  answer={formatAccidentReplacement(session.missionPablo.accidentRemplacement)} 
+                />
+                <QuestionItem 
+                  question="Quel maintien de salaire pendant l'arret ?"
+                  answer={formatAccidentSalary(session.missionPablo.accidentSalaire)} 
+                />
               </CardContent>
             </Card>
           )}
 
-          {/* Mission Dismissal */}
+          {/* Mission Dismissal - Formal questionnaire format */}
           {session?.missionDismissal && (
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <UserMinus className="w-5 h-5 text-red-500" />
-                  Gestion des departs
+                  <UserMinus className="w-5 h-5 text-primary" />
+                  Gestion des fins de contrat
                 </CardTitle>
+                <CardDescription>Vos preferences pour la gestion des departs</CardDescription>
               </CardHeader>
-              <CardContent>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <DataItem 
-                    icon={<Users className="w-4 h-4" />}
-                    label="Employe" 
-                    value={session.missionDismissal.employeeName} 
-                  />
-                  <DataItem 
-                    icon={<FileText className="w-4 h-4" />}
-                    label="Motif" 
-                    value={formatMotif(session.missionDismissal.motif)} 
-                  />
-                  <DataItem 
-                    icon={<Clock className="w-4 h-4" />}
-                    label="Preavis" 
-                    value={formatPreavis(session.missionDismissal.preavis)} 
-                  />
-                  <DataItem 
-                    icon={<Wallet className="w-4 h-4" />}
-                    label="Solde" 
-                    value={session.missionDismissal.solde.join(', ')} 
-                  />
-                  <DataItem 
-                    icon={<PenTool className="w-4 h-4" />}
-                    label="Signataire" 
-                    value={formatSignataire(session.missionDismissal.signataire)} 
-                  />
-                </div>
+              <CardContent className="space-y-4">
+                <QuestionItem 
+                  question="Quels types de motifs de depart gerez-vous ?"
+                  answer={formatMotif(session.missionDismissal.motif)} 
+                />
+                <QuestionItem 
+                  question="Quelle duree de preavis appliquez-vous ?"
+                  answer={formatPreavis(session.missionDismissal.preavis)} 
+                />
+                <QuestionItem 
+                  question="Quels elements incluez-vous dans le solde de tout compte ?"
+                  answer={formatSolde(session.missionDismissal.solde)} 
+                />
+                <QuestionItem 
+                  question="Qui signe les documents de depart ?"
+                  answer={formatSignataire(session.missionDismissal.signataire)} 
+                />
               </CardContent>
             </Card>
           )}
@@ -386,15 +366,15 @@ export function ReportScreen({ session, onRestart }: ReportScreenProps) {
   )
 }
 
-// Helper components
-function DataItem({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
+// Helper components - Formal questionnaire style
+function QuestionItem({ question, answer }: { question: string; answer: string }) {
   return (
-    <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
-      <div className="text-primary mt-0.5">{icon}</div>
-      <div>
-        <p className="text-xs text-muted-foreground">{label}</p>
-        <p className="font-medium">{value}</p>
-      </div>
+    <div className="border-b border-border/50 pb-3 last:border-0 last:pb-0">
+      <p className="text-sm text-muted-foreground mb-1">{question}</p>
+      <p className="font-medium text-foreground flex items-center gap-2">
+        <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
+        {answer}
+      </p>
     </div>
   )
 }
@@ -554,17 +534,28 @@ function formatMotif(value: string): string {
     'economique': 'Motif economique',
     'faute': 'Faute professionnelle',
     'finCDD': 'Fin de CDD',
-    'essai': 'Rupture periode essai'
+    'essai': 'Rupture periode essai',
+    'commun': 'Rupture conventionnelle'
   }
   return map[value] || value
 }
 
+function formatSolde(values: string[]): string {
+  const map: Record<string, string> = {
+    'vacances': 'Conges payes',
+    'heuresSup': 'Heures supplementaires',
+    'primes': 'Primes au prorata',
+    'indemnite': 'Indemnite legale'
+  }
+  return values.map(v => map[v] || v).join(', ') || 'Non specifie'
+}
+
 function formatPreavis(value: string): string {
   const map: Record<string, string> = {
-    'legal': 'Preavis legal',
+    'legal': 'Preavis legal (1-2 mois)',
     '1mois': '1 mois',
     '3mois': '3 mois',
-    'contrat': 'Selon contrat'
+    'rien': 'Depart immediat (pas de preavis)'
   }
   return map[value] || value
 }
