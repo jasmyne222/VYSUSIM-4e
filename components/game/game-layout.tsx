@@ -20,7 +20,7 @@ export function GameLayout({ children, currentScreen, showProgress = true }: Gam
   return (
     <div className="h-screen bg-background flex flex-col overflow-hidden">
       {/* Header */}
-      <header className="flex-shrink-0 bg-background/95 backdrop-blur-md border-b border-border/60 z-50">
+      <header className="flex-shrink-0 bg-white border-b border-border/60 z-50">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           {/* Logo */}
           <motion.div

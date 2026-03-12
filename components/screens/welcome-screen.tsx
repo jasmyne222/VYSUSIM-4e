@@ -120,25 +120,6 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         </div>
       </motion.div>
 
-      {/* Simple steps */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7 }}
-        className="w-full max-w-3xl"
-      >
-        <div className="bg-secondary/50 rounded-xl p-5">
-          <h2 className="text-base font-bold text-foreground mb-3">
-            Comment ça fonctionne ?
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <StepItem number={1} text="Renseignez vos employés" />
-            <StepItem number={2} text="Congé maternité" />
-            <StepItem number={3} text="Accident de travail" />
-            <StepItem number={4} text="Gestion des départs" />
-          </div>
-        </div>
-      </motion.div>
     </div>
   )
 }
@@ -149,17 +130,6 @@ function StatCard({ value, label, icon, color }: { value: string; label: string;
       <div className={`flex justify-center mb-1 ${color}`}>{icon}</div>
       <p className={`text-xl font-extrabold ${color}`}>{value}</p>
       <p className="text-xs text-muted-foreground leading-tight mt-1">{label}</p>
-    </div>
-  )
-}
-
-function StepItem({ number, text }: { number: number; text: string }) {
-  return (
-    <div className="flex items-center gap-2 bg-card rounded-lg p-3">
-      <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center text-sm">
-        {number}
-      </div>
-      <p className="text-sm text-foreground font-medium">{text}</p>
     </div>
   )
 }
