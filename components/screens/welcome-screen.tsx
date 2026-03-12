@@ -36,7 +36,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted text-muted-foreground text-sm"
         >
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          Duree : environ 30 minutes
+          Durée : environ 30 minutes
         </motion.div>
       </motion.div>
 
@@ -48,7 +48,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         className="my-2 max-w-xl"
       >
         <VyvyBot
-          message="Bonjour ! Je suis Vyvy, votre guide. Ensemble, nous allons simuler la gestion RH d'une pizzeria. A chaque etape, je vous expliquerai quoi faire. C'est parti !"
+          message="Bonjour ! Je suis Vyvy, votre guide. Ensemble, nous allons simuler la gestion RH d'une pizzeria. À chaque étape, je vous expliquerai quoi faire. C'est parti !"
           expression="happy"
           size="lg"
         />
@@ -63,13 +63,13 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
       >
         <div className="bg-card border border-border rounded-xl p-6">
           <h2 className="text-lg font-semibold text-foreground mb-4 text-center">
-            Comment ca fonctionne ?
+            Comment ça fonctionne ?
           </h2>
           <div className="space-y-4">
-            <StepItem number={1} text="Vous decouvrez votre equipe de 4 employes" />
-            <StepItem number={2} text="Vous faites face a 3 situations RH reelles" />
-            <StepItem number={3} text="A chaque etape, vous choisissez parmi plusieurs options" />
-            <StepItem number={4} text="A la fin, un recapitulatif de vos choix est genere" />
+            <StepItem number={1} text="Vous découvrez votre équipe de 4 employés" />
+            <StepItem number={2} text="Vous faites face à 3 situations RH réelles" />
+            <StepItem number={3} text="À chaque étape, vous choisissez parmi plusieurs options" />
+            <StepItem number={4} text="À la fin, un récapitulatif de vos choix est généré" />
           </div>
         </div>
       </motion.div>
@@ -90,7 +90,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
           <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
         </Button>
         <p className="text-sm text-muted-foreground">
-          Cliquez sur le bouton orange pour demarrer
+          Cliquez sur le bouton orange pour démarrer
         </p>
       </motion.div>
 

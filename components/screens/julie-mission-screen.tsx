@@ -18,48 +18,24 @@ interface JulieMissionScreenProps {
 const missionSteps = [
   {
     id: 'congeDuree',
-    title: "Duree du conge maternite",
+    title: "Durée du congé maternité",
     description: "Julie annonce sa grossesse",
     icon: <Clock className="w-5 h-5" />,
     options: [
-      {
-        id: 'legal',
-        text: "16 semaines (minimum legal)",
-        hrContext: "Vysual utilisera cette duree pour configurer l'absence, calculer la paie et planifier le remplacement."
-      },
-      {
-        id: '20',
-        text: "20 semaines",
-        hrContext: "Vysual utilisera cette duree pour configurer l'absence, calculer la paie et planifier le remplacement."
-      },
-      {
-        id: '24',
-        text: "24 semaines",
-        hrContext: "Vysual utilisera cette duree pour configurer l'absence, calculer la paie et planifier le remplacement."
-      }
+      { id: 'legal', text: "16 semaines (minimum légal)" },
+      { id: '20', text: "20 semaines" },
+      { id: '24', text: "24 semaines" }
     ]
   },
   {
     id: 'congeSalaire',
-    title: "Salaire pendant le conge",
-    description: "Quel est le maintien de salaire ?",
+    title: "Salaire pendant le congé",
+    description: "Quel maintien de salaire ?",
     icon: <Wallet className="w-5 h-5" />,
     options: [
-      {
-        id: 'complet',
-        text: "Maintien a 100%",
-        hrContext: "Vysual calculera le complement aux IJSS Secu et l'ajoutera a la paie mensuelle."
-      },
-      {
-        id: 'partiel',
-        text: "Maintien partiel (80%)",
-        hrContext: "Vysual calculera le complement partiel aux IJSS et precisera le solde pour Julie."
-      },
-      {
-        id: 'ijss',
-        text: "IJSS uniquement",
-        hrContext: "Vysual declarera l'absence et remplacera le salaire par les IJSS Secu (a verifier)."
-      }
+      { id: 'complet', text: "Maintien à 100%" },
+      { id: 'partiel', text: "Maintien partiel (80%)" },
+      { id: 'ijss', text: "IJSS uniquement" }
     ]
   },
   {
@@ -68,44 +44,20 @@ const missionSteps = [
     description: "Comment remplacer Julie ?",
     icon: <Users className="w-5 h-5" />,
     options: [
-      {
-        id: 'interne',
-        text: "Promotion interne temporaire",
-        hrContext: "Vysual enregistrera la promotion temporaire et assurera le retour au poste normal."
-      },
-      {
-        id: 'cdd',
-        text: "CDD de remplacement",
-        hrContext: "Vysual generera le contrat CDD jusqu'au retour de Julie et gerera les fins de contrat."
-      },
-      {
-        id: 'interim',
-        text: "Agence interim",
-        hrContext: "Vysual tracera les frais interim, les declarations et le suivi des rapports."
-      }
+      { id: 'interne', text: "Promotion interne temporaire" },
+      { id: 'cdd', text: "CDD de remplacement" },
+      { id: 'interim', text: "Agence intérim" }
     ]
   },
   {
     id: 'workflowValidation',
     title: "Qui valide les absences ?",
-    description: "Qui approuve le conge maternite ?",
+    description: "Qui approuve le congé maternité ?",
     icon: <PenTool className="w-5 h-5" />,
     options: [
-      {
-        id: 'moi',
-        text: "Moi (gerant)",
-        hrContext: "Vous validez directement dans Vysual. Responsabilite complete, mais full control."
-      },
-      {
-        id: 'rh',
-        text: "Service RH (Vysual)",
-        hrContext: "Vysual valide et enregistre. Gain de temps, expertise RH integree."
-      },
-      {
-        id: 'fiduciaire',
-        text: "Cabinet comptable",
-        hrContext: "Vous autorisez votre cabinet a valider via Vysual. Coordination externe."
-      }
+      { id: 'moi', text: "Moi (gérant)" },
+      { id: 'rh', text: "Service RH" },
+      { id: 'fiduciaire', text: "Cabinet comptable" }
     ]
   }
 ]
@@ -195,7 +147,7 @@ export function JulieMissionScreen({ onComplete, onBack }: JulieMissionScreenPro
           Mission 1 — Conge maternite
         </h2>
         <p className="text-sm text-muted-foreground">
-          Etape {currentStep + 1} sur {missionSteps.length}
+          Étape {currentStep + 1} sur {missionSteps.length}
         </p>
       </motion.div>
 
@@ -297,7 +249,7 @@ export function JulieMissionScreen({ onComplete, onBack }: JulieMissionScreenPro
           className="flex items-center gap-2 font-semibold"
         >
           <ArrowLeft className="w-5 h-5" />
-          {currentStep > 0 ? 'Etape precedente' : 'Retour'}
+          {currentStep > 0 ? 'Étape précédente' : 'Retour'}
         </Button>
         <Button 
           size="lg" 
@@ -305,7 +257,7 @@ export function JulieMissionScreen({ onComplete, onBack }: JulieMissionScreenPro
           disabled={!decisions[step.id]}
           className="flex items-center gap-2 font-semibold shadow-lg shadow-primary/20"
         >
-          {isLastStep ? 'Voir les resultats' : 'Etape suivante'}
+          {isLastStep ? 'Voir les résultats' : 'Étape suivante'}
           <ArrowRight className="w-5 h-5" />
         </Button>
       </motion.div>

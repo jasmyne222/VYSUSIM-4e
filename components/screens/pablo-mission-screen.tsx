@@ -19,47 +19,23 @@ const missionSteps = [
   {
     id: 'accidentType',
     title: "Type d'accident",
-    description: "Pablo s'est blesse en cuisinant",
+    description: "Pablo s'est blessé en cuisinant",
     icon: <AlertTriangle className="w-5 h-5" />,
     options: [
-      {
-        id: 'travail',
-        text: "Accident de travail",
-        hrContext: "Vysual declarera l'accident a la CPAM dans les 48h et generera le formulaire officiel."
-      },
-      {
-        id: 'trajet',
-        text: "Accident de trajet",
-        hrContext: "Vysual gera le regime specifique accident trajet aupres de la Secu avec declarations appropriees."
-      },
-      {
-        id: 'horsPoste',
-        text: "Accident hors travail",
-        hrContext: "Vysual enregistrera comme arret maladie classique, pas de declaration accident de travail."
-      }
+      { id: 'travail', text: "Accident de travail" },
+      { id: 'trajet', text: "Accident de trajet" },
+      { id: 'horsPoste', text: "Accident hors travail" }
     ]
   },
   {
     id: 'accidentDeclaration',
-    title: "Qui declare l'accident ?",
+    title: "Qui déclare l'accident ?",
     description: "Responsable de la notification officielle",
     icon: <FileText className="w-5 h-5" />,
     options: [
-      {
-        id: 'moi',
-        text: "Moi (gerant)",
-        hrContext: "Vous gerez la declaration. Vysual vous aide a rediger le formulaire officiel."
-      },
-      {
-        id: 'fiduciaire',
-        text: "Cabinet comptable",
-        hrContext: "Votre cabinet declare via Vysual. Suivi partage et archivage centralise."
-      },
-      {
-        id: 'rh',
-        text: "Service RH (Vysual)",
-        hrContext: "Vysual declare directement aupres de la Secu. Declaration rapide et serieuse."
-      }
+      { id: 'moi', text: "Moi (gérant)" },
+      { id: 'fiduciaire', text: "Cabinet comptable" },
+      { id: 'rh', text: "Service RH" }
     ]
   },
   {
@@ -68,44 +44,20 @@ const missionSteps = [
     description: "Pablo est absent 2 semaines",
     icon: <UserCog className="w-5 h-5" />,
     options: [
-      {
-        id: 'interimaire',
-        text: "Agence interim",
-        hrContext: "Vysual trace les heures interim, le calcul des couts et genere les declarations URSSAF."
-      },
-      {
-        id: 'heuresSup',
-        text: "Heures supplementaires",
-        hrContext: "Vysual calcule les heures sup (maj 25-50%), la limite legale (220h/an) et la paie."
-      },
-      {
-        id: 'rien',
-        text: "Reduire l'activite",
-        hrContext: "Vysual ajuste les plannings et le chiffre d'affaires pour cette periode."
-      }
+      { id: 'interimaire', text: "Agence intérim" },
+      { id: 'heuresSup', text: "Heures supplémentaires" },
+      { id: 'rien', text: "Réduire l'activité" }
     ]
   },
   {
     id: 'accidentSalaire',
     title: "Salaire pendant l'absence",
-    description: "Comment maintenir la paie de Pablo ?",
+    description: "Quel maintien de salaire ?",
     icon: <Wallet className="w-5 h-5" />,
     options: [
-      {
-        id: 'complet',
-        text: "Maintien a 100%",
-        hrContext: "Vysual calcule le complement aux IJSS Secu et l'ajoute a la paie mensuelle."
-      },
-      {
-        id: 'partiel',
-        text: "Maintien 80%",
-        hrContext: "Vysual calcule le complement partiel et precise le solde pour Pablo."
-      },
-      {
-        id: 'ijss',
-        text: "IJSS uniquement",
-        hrContext: "Vysual remplace la paie par les IJSS Secu (a verifier avec convention collective)."
-      }
+      { id: 'complet', text: "Maintien à 100%" },
+      { id: 'partiel', text: "Maintien 80%" },
+      { id: 'ijss', text: "IJSS uniquement" }
     ]
   }
 ]
@@ -195,7 +147,7 @@ export function PabloMissionScreen({ onComplete, onBack }: PabloMissionScreenPro
           Mission 2 — Accident de travail
         </h2>
         <p className="text-sm text-muted-foreground">
-          Etape {currentStep + 1} sur {missionSteps.length}
+          Étape {currentStep + 1} sur {missionSteps.length}
         </p>
       </motion.div>
 
@@ -303,7 +255,7 @@ export function PabloMissionScreen({ onComplete, onBack }: PabloMissionScreenPro
           className="flex items-center gap-2 font-semibold"
         >
           <ArrowLeft className="w-5 h-5" />
-          {currentStep > 0 ? 'Etape precedente' : 'Retour'}
+          {currentStep > 0 ? 'Étape précédente' : 'Retour'}
         </Button>
         <Button 
           size="lg" 
@@ -311,7 +263,7 @@ export function PabloMissionScreen({ onComplete, onBack }: PabloMissionScreenPro
           disabled={!decisions[step.id]}
           className="flex items-center gap-2 font-semibold shadow-lg shadow-primary/20"
         >
-          {isLastStep ? 'Voir les resultats' : 'Etape suivante'}
+          {isLastStep ? 'Voir les résultats' : 'Étape suivante'}
           <ArrowRight className="w-5 h-5" />
         </Button>
       </motion.div>

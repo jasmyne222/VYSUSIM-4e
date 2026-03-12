@@ -12,7 +12,7 @@ interface GameLayoutProps {
 }
 
 const screenOrder: GameScreen[] = ['welcome', 'team', 'mission-julie', 'mission-pablo', 'mission-dismissal', 'report']
-const screenLabels = ['Bienvenue', 'Equipe', 'Julie', 'Pablo', 'Departs', 'Rapport']
+const screenLabels = ['Bienvenue', 'Équipe', 'Julie', 'Pablo', 'Départs', 'Rapport']
 
 export function GameLayout({ children, currentScreen, showProgress = true }: GameLayoutProps) {
   const currentStep = screenOrder.indexOf(currentScreen)
@@ -31,10 +31,10 @@ export function GameLayout({ children, currentScreen, showProgress = true }: Gam
             <Image
               src="/vysual-logo.png"
               alt="Vysual"
-              width={140}
-              height={44}
+              width={180}
+              height={56}
               priority
-              className="h-9 w-auto"
+              className="h-12 w-auto"
             />
           </motion.div>
 

@@ -21,85 +21,49 @@ interface DismissalMissionScreenProps {
 const missionSteps = [
   {
     id: 'employeeName',
-    title: "Quel employe ?",
-    description: "Selectionnez l'employe a licencier",
+    title: "Quel employé ?",
+    description: "Sélectionnez l'employé concerné",
     icon: <UserMinus className="w-5 h-5" />,
     type: 'select' as const
   },
   {
     id: 'motif',
-    title: "Motif du depart",
+    title: "Motif du départ",
     description: "Quelle est la raison ?",
     icon: <FileWarning className="w-5 h-5" />,
     type: 'cards' as const,
     options: [
-      {
-        id: 'economique',
-        text: "Raisons economiques",
-        hrContext: "Vysual generera la procedure legale et checklist PSE si necessaire."
-      },
-      {
-        id: 'faute',
-        text: "Faute professionnelle",
-        hrContext: "Vysual documentera la faute et generera l'entretien prealable officiel."
-      },
-      {
-        id: 'finCDD',
-        text: "Fin de CDD",
-        hrContext: "Vysual calculera la prime de precarite (10%) et les indemnites CDD."
-      },
-      {
-        id: 'essai',
-        text: "Rupture essai",
-        hrContext: "Vysual archivera la rupture sans indemnites mais avec respect du delai."
-      },
-      {
-        id: 'commun',
-        text: "Rupture conventionnelle",
-        hrContext: "Vysual creera l'accord de rupture et validera la transaction."
-      }
+      { id: 'economique', text: "Raisons économiques" },
+      { id: 'faute', text: "Faute professionnelle" },
+      { id: 'finCDD', text: "Fin de CDD" },
+      { id: 'essai', text: "Rupture période d'essai" },
+      { id: 'commun', text: "Rupture conventionnelle" }
     ]
   },
   {
     id: 'preavis',
-    title: "Duree du preavis",
+    title: "Durée du préavis",
     description: "Combien de temps ?",
     icon: <Clock className="w-5 h-5" />,
     type: 'cards' as const,
     options: [
-      {
-        id: 'legal',
-        text: "Legal (1-2 mois)",
-        hrContext: "Vysual appliquera automatiquement le delai selon l'anciennete."
-      },
-      {
-        id: '1mois',
-        text: "1 mois",
-        hrContext: "Vysual enregistrera 1 mois exact et calculera la date de fin."
-      },
-      {
-        id: '3mois',
-        text: "3 mois",
-        hrContext: "Vysual creera le calendrier 3 mois et generera les reminders."
-      },
-      {
-        id: 'rien',
-        text: "Pas de preavis",
-        hrContext: "Vysual marquera comme depart immediat (exception autorisee)."
-      }
+      { id: 'legal', text: "Légal (1-2 mois)" },
+      { id: '1mois', text: "1 mois" },
+      { id: '3mois', text: "3 mois" },
+      { id: 'rien', text: "Pas de préavis" }
     ]
   },
   {
     id: 'solde',
     title: "Solde de tout compte",
-    description: "Elements du solde ?",
+    description: "Éléments à inclure ?",
     icon: <Wallet className="w-5 h-5" />,
     type: 'multiselect' as const,
     options: [
-      { id: 'vacances', text: "Conges payes non pris", hrContext: "Vysual calculera l'indemnite CP" },
-      { id: 'heuresSup', text: "Heures supplementaires", hrContext: "Vysual listera les heures non recuperees" },
-      { id: 'primes', text: "Primes au prorata", hrContext: "Vysual calculera 13e mois et autres primes" },
-      { id: 'indemnite', text: "Indemnite legale", hrContext: "Vysual calculera selon anciennete et motif" }
+      { id: 'vacances', text: "Congés payés non pris" },
+      { id: 'heuresSup', text: "Heures supplémentaires" },
+      { id: 'primes', text: "Primes au prorata" },
+      { id: 'indemnite', text: "Indemnité légale" }
     ]
   },
   {
@@ -109,21 +73,9 @@ const missionSteps = [
     icon: <PenTool className="w-5 h-5" />,
     type: 'cards' as const,
     options: [
-      {
-        id: 'moi',
-        text: "Vous (gerant)",
-        hrContext: "Vous aurez pouvoir signature. Vysual prepare tous les documents."
-      },
-      {
-        id: 'rh',
-        text: "Service RH (Vysual)",
-        hrContext: "Vysual signe avec votre delegation. Procedure automatisee."
-      },
-      {
-        id: 'fiduciaire',
-        text: "Cabinet comptable",
-        hrContext: "Votre cabinet signe. Vysual coordonne et archive tout."
-      }
+      { id: 'moi', text: "Vous (gérant)" },
+      { id: 'rh', text: "Service RH" },
+      { id: 'fiduciaire', text: "Cabinet comptable" }
     ]
   }
 ]
@@ -238,7 +190,7 @@ export function DismissalMissionScreen({ employees, onComplete, onBack }: Dismis
           Mission 3 — Gestion des licenciements
         </h2>
         <p className="text-sm text-muted-foreground">
-          Etape {currentStep + 1} sur {missionSteps.length}
+          Étape {currentStep + 1} sur {missionSteps.length}
         </p>
       </motion.div>
 
@@ -399,7 +351,7 @@ export function DismissalMissionScreen({ employees, onComplete, onBack }: Dismis
           className="flex items-center gap-2 font-semibold"
         >
           <ArrowLeft className="w-5 h-5" />
-          {currentStep > 0 ? 'Etape precedente' : 'Retour'}
+          {currentStep > 0 ? 'Étape précédente' : 'Retour'}
         </Button>
         <Button 
           size="lg" 
@@ -407,7 +359,7 @@ export function DismissalMissionScreen({ employees, onComplete, onBack }: Dismis
           disabled={!canProceed()}
           className="flex items-center gap-2 font-semibold shadow-lg shadow-primary/20"
         >
-          {isLastStep ? 'Voir les resultats' : 'Etape suivante'}
+          {isLastStep ? 'Voir les résultats' : 'Étape suivante'}
           <ArrowRight className="w-5 h-5" />
         </Button>
       </motion.div>

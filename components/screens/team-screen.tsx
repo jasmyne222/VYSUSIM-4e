@@ -102,7 +102,7 @@ export function TeamScreen({ onNext, onBack }: TeamScreenProps) {
   const [showOnboardingPopup, setShowOnboardingPopup] = useState(true)
   
   const [vyvyMessage, setVyvyMessage] = useState(
-    "Voici l'equipe de la pizzeria demo ! Dans votre cas, renseignez vos vrais employes."
+    "Voici l'équipe de la pizzeria démo ! Dans votre cas, renseignez vos vrais employés."
   )
 
   const handleEditEmployee = (employee: Employee) => {
@@ -191,40 +191,38 @@ export function TeamScreen({ onNext, onBack }: TeamScreenProps) {
 
   return (
     <div className="space-y-6">
-      {/* Onboarding popup — shown on first visit */}
+      {/* Onboarding popup */}
       <Dialog open={showOnboardingPopup} onOpenChange={setShowOnboardingPopup}>
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-xl">
-              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                <Info className="w-4 h-4 text-primary" />
-              </div>
-              Avant de commencer
+              <Users className="w-5 h-5 text-primary" />
+              Créez votre équipe
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-2">
             <p className="text-foreground leading-relaxed">
-              Dans cette etape, vous voyez une <strong>equipe de demonstration</strong> (pizzeria fictive). 
+              Renseignez ici les <strong>vrais employés</strong> de votre entreprise avec leurs informations contractuelles.
             </p>
-            <div className="bg-primary/5 border border-primary/15 rounded-lg p-4 space-y-2">
-              <p className="font-semibold text-sm text-foreground">Dans votre vraie utilisation :</p>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li className="flex items-start gap-2">
-                  <span className="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">1</span>
-                  Supprimez les employes de demo
+            <div className="bg-muted/50 rounded-lg p-4 space-y-3">
+              <p className="text-sm text-muted-foreground">Ces informations permettront de :</p>
+              <ul className="space-y-2 text-sm text-foreground">
+                <li className="flex items-center gap-2">
+                  <Check className="w-4 h-4 text-primary flex-shrink-0" />
+                  Construire votre organigramme
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">2</span>
-                  Ajoutez vos vrais employes avec leurs informations reelles
+                <li className="flex items-center gap-2">
+                  <Check className="w-4 h-4 text-primary flex-shrink-0" />
+                  Adapter les scénarios RH à votre structure
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">3</span>
-                  Ces donnees permettront a Vysual de personnaliser votre solution
+                <li className="flex items-center gap-2">
+                  <Check className="w-4 h-4 text-primary flex-shrink-0" />
+                  Personnaliser votre solution Vysual
                 </li>
               </ul>
             </div>
-            <p className="text-sm text-muted-foreground">
-              Pour cette demo, vous pouvez garder l'equipe telle quelle et cliquer sur "Continuer".
+            <p className="text-sm text-muted-foreground italic">
+              Pour cette démo, une équipe fictive est déjà créée.
             </p>
           </div>
           <DialogFooter>
@@ -233,7 +231,7 @@ export function TeamScreen({ onNext, onBack }: TeamScreenProps) {
               onClick={() => setShowOnboardingPopup(false)}
               className="w-full font-semibold"
             >
-              J'ai compris, continuer
+              Commencer
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -246,10 +244,10 @@ export function TeamScreen({ onNext, onBack }: TeamScreenProps) {
         className="text-center space-y-1"
       >
         <h2 className="text-xl md:text-2xl font-semibold text-foreground tracking-tight">
-          Configuration de l'equipe
+          Configuration de l'équipe
         </h2>
         <p className="text-muted-foreground text-sm">
-          Gerez votre equipe et leurs informations contractuelles
+          Gérez votre équipe et leurs informations contractuelles
         </p>
       </motion.div>
 

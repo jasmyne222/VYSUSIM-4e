@@ -113,10 +113,10 @@ export function ReportScreen({ session, onRestart }: ReportScreenProps) {
           <CheckCircle2 className="w-10 h-10 text-white" />
         </motion.div>
         <h2 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
-          Simulation terminee
+          Simulation terminée
         </h2>
         <p className="text-muted-foreground max-w-xl mx-auto">
-          Voici le recapitulatif de vos besoins RH. Ces informations permettront a Vysual de configurer votre solution sur-mesure.
+          Voici le récapitulatif de vos besoins RH. Ces informations permettront à Vysual de configurer votre solution sur-mesure.
         </p>
       </motion.div>
 
@@ -130,7 +130,7 @@ export function ReportScreen({ session, onRestart }: ReportScreenProps) {
         <Card className="text-center">
           <CardContent className="pt-6">
             <div className="text-3xl font-bold text-primary">{session?.teamConfig.length || 0}</div>
-            <p className="text-sm text-muted-foreground">Employes</p>
+            <p className="text-sm text-muted-foreground">Employés</p>
           </CardContent>
         </Card>
         <Card className="text-center">
@@ -142,7 +142,7 @@ export function ReportScreen({ session, onRestart }: ReportScreenProps) {
         <Card className="text-center">
           <CardContent className="pt-6">
             <div className="text-3xl font-bold text-primary">{completionRate}%</div>
-            <p className="text-sm text-muted-foreground">Complete</p>
+            <p className="text-sm text-muted-foreground">Complété</p>
           </CardContent>
         </Card>
         <Card className="text-center">
@@ -161,7 +161,7 @@ export function ReportScreen({ session, onRestart }: ReportScreenProps) {
           transition={{ delay: 0.3 }}
         >
           <VyvyBot
-            message="Bravo ! Vous avez complete la simulation. Ces informations vont permettre a Vysual de creer votre solution RH sur-mesure."
+            message="Bravo ! Vous avez complété la simulation. Ces informations vont permettre à Vysual de créer votre solution RH sur-mesure."
             expression="happy"
             size="md"
           />
@@ -201,7 +201,7 @@ export function ReportScreen({ session, onRestart }: ReportScreenProps) {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Users className="w-5 h-5 text-primary" />
-                Equipe ({session?.teamConfig.length || 0} employes)
+                Équipe ({session?.teamConfig.length || 0} employés)
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -236,25 +236,25 @@ export function ReportScreen({ session, onRestart }: ReportScreenProps) {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Baby className="w-5 h-5 text-primary" />
-                  Gestion des conges maternite
+                  Gestion des congés maternité
                 </CardTitle>
-                <CardDescription>Vos preferences pour la gestion des absences maternite</CardDescription>
+                <CardDescription>Vos préférences pour la gestion des absences maternité</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <QuestionItem 
-                  question="Quelle duree de conge maternite souhaitez-vous accorder ?"
+                  question="Quelle durée de congé maternité souhaitez-vous accorder ?"
                   answer={formatDuration(session.missionJulie.congeDuree)} 
                 />
                 <QuestionItem 
-                  question="Quel maintien de salaire pendant le conge ?"
+                  question="Quel maintien de salaire pendant le congé ?"
                   answer={formatSalary(session.missionJulie.congeSalaire)} 
                 />
                 <QuestionItem 
-                  question="Comment souhaitez-vous gerer le remplacement ?"
+                  question="Comment souhaitez-vous gérer le remplacement ?"
                   answer={formatReplacement(session.missionJulie.congeRemplacement)} 
                 />
                 <QuestionItem 
-                  question="Qui valide les demandes de conge maternite ?"
+                  question="Qui valide les demandes de congé maternité ?"
                   answer={formatValidation(session.missionJulie.workflowValidation)} 
                 />
               </CardContent>
@@ -269,7 +269,7 @@ export function ReportScreen({ session, onRestart }: ReportScreenProps) {
                   <Ambulance className="w-5 h-5 text-primary" />
                   Gestion des accidents de travail
                 </CardTitle>
-                <CardDescription>Vos preferences pour la gestion des accidents</CardDescription>
+                <CardDescription>Vos préférences pour la gestion des accidents</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <QuestionItem 
@@ -277,15 +277,15 @@ export function ReportScreen({ session, onRestart }: ReportScreenProps) {
                   answer={formatAccidentType(session.missionPablo.accidentType)} 
                 />
                 <QuestionItem 
-                  question="Qui effectue les declarations d'accident ?"
+                  question="Qui effectue les déclarations d'accident ?"
                   answer={formatDeclaration(session.missionPablo.accidentDeclaration)} 
                 />
                 <QuestionItem 
-                  question="Comment gerez-vous le remplacement temporaire ?"
+                  question="Comment gérez-vous le remplacement temporaire ?"
                   answer={formatAccidentReplacement(session.missionPablo.accidentRemplacement)} 
                 />
                 <QuestionItem 
-                  question="Quel maintien de salaire pendant l'arret ?"
+                  question="Quel maintien de salaire pendant l'arrêt ?"
                   answer={formatAccidentSalary(session.missionPablo.accidentSalaire)} 
                 />
               </CardContent>
@@ -300,23 +300,23 @@ export function ReportScreen({ session, onRestart }: ReportScreenProps) {
                   <UserMinus className="w-5 h-5 text-primary" />
                   Gestion des fins de contrat
                 </CardTitle>
-                <CardDescription>Vos preferences pour la gestion des departs</CardDescription>
+                <CardDescription>Vos préférences pour la gestion des départs</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <QuestionItem 
-                  question="Quels types de motifs de depart gerez-vous ?"
+                  question="Quels types de motifs de départ gérez-vous ?"
                   answer={formatMotif(session.missionDismissal.motif)} 
                 />
                 <QuestionItem 
-                  question="Quelle duree de preavis appliquez-vous ?"
+                  question="Quelle durée de préavis appliquez-vous ?"
                   answer={formatPreavis(session.missionDismissal.preavis)} 
                 />
                 <QuestionItem 
-                  question="Quels elements incluez-vous dans le solde de tout compte ?"
+                  question="Quels éléments incluez-vous dans le solde de tout compte ?"
                   answer={formatSolde(session.missionDismissal.solde)} 
                 />
                 <QuestionItem 
-                  question="Qui signe les documents de depart ?"
+                  question="Qui signe les documents de départ ?"
                   answer={formatSignataire(session.missionDismissal.signataire)} 
                 />
               </CardContent>
@@ -338,7 +338,7 @@ export function ReportScreen({ session, onRestart }: ReportScreenProps) {
           className="gap-2 font-semibold shadow-lg shadow-primary/20"
         >
           <Send className="w-5 h-5" />
-          Envoyer a Vysual
+          Envoyer à Vysual
         </Button>
         <Button 
           size="xl" 
@@ -347,7 +347,7 @@ export function ReportScreen({ session, onRestart }: ReportScreenProps) {
           className="gap-2 font-semibold"
         >
           <Download className="w-5 h-5" />
-          Telecharger PDF
+          Télécharger PDF
         </Button>
       </motion.div>
 
@@ -459,7 +459,7 @@ function generateReportContent(session: GameSession | null): string {
 // Format helpers
 function formatDuration(value: string): string {
   const map: Record<string, string> = {
-    'legal': '16 semaines (legal)',
+    'legal': '16 semaines (légal)',
     '20': '20 semaines',
     '24': '24 semaines'
   }
@@ -479,14 +479,14 @@ function formatReplacement(value: string): string {
   const map: Record<string, string> = {
     'interne': 'Recrutement interne',
     'cdd': 'CDD remplacement',
-    'interim': 'Interimaire'
+    'interim': 'Intérimaire'
   }
   return map[value] || value
 }
 
 function formatValidation(value: string): string {
   const map: Record<string, string> = {
-    'moi': 'Gerant',
+    'moi': 'Gérant',
     'rh': 'Service RH',
     'fiduciaire': 'Fiduciaire'
   }
@@ -504,7 +504,7 @@ function formatAccidentType(value: string): string {
 
 function formatDeclaration(value: string): string {
   const map: Record<string, string> = {
-    'moi': 'Par le gerant',
+    'moi': 'Par le gérant',
     'fiduciaire': 'Par la fiduciaire',
     'rh': 'Par le service RH'
   }
@@ -513,9 +513,9 @@ function formatDeclaration(value: string): string {
 
 function formatAccidentReplacement(value: string): string {
   const map: Record<string, string> = {
-    'interimaire': 'Interimaire',
-    'heuresSup': 'Heures supplementaires',
-    'rien': 'Reduction activite'
+    'interimaire': 'Intérimaire',
+    'heuresSup': 'Heures supplémentaires',
+    'rien': 'Réduction activité'
   }
   return map[value] || value
 }
@@ -531,10 +531,10 @@ function formatAccidentSalary(value: string): string {
 
 function formatMotif(value: string): string {
   const map: Record<string, string> = {
-    'economique': 'Motif economique',
+    'economique': 'Motif économique',
     'faute': 'Faute professionnelle',
     'finCDD': 'Fin de CDD',
-    'essai': 'Rupture periode essai',
+    'essai': 'Rupture période d\'essai',
     'commun': 'Rupture conventionnelle'
   }
   return map[value] || value
@@ -542,27 +542,27 @@ function formatMotif(value: string): string {
 
 function formatSolde(values: string[]): string {
   const map: Record<string, string> = {
-    'vacances': 'Conges payes',
-    'heuresSup': 'Heures supplementaires',
+    'vacances': 'Congés payés',
+    'heuresSup': 'Heures supplémentaires',
     'primes': 'Primes au prorata',
-    'indemnite': 'Indemnite legale'
+    'indemnite': 'Indemnité légale'
   }
-  return values.map(v => map[v] || v).join(', ') || 'Non specifie'
+  return values.map(v => map[v] || v).join(', ') || 'Non spécifié'
 }
 
 function formatPreavis(value: string): string {
   const map: Record<string, string> = {
-    'legal': 'Preavis legal (1-2 mois)',
+    'legal': 'Préavis légal (1-2 mois)',
     '1mois': '1 mois',
     '3mois': '3 mois',
-    'rien': 'Depart immediat (pas de preavis)'
+    'rien': 'Départ immédiat (pas de préavis)'
   }
   return map[value] || value
 }
 
 function formatSignataire(value: string): string {
   const map: Record<string, string> = {
-    'moi': 'Gerant',
+    'moi': 'Gérant',
     'rh': 'Service RH',
     'fiduciaire': 'Fiduciaire'
   }

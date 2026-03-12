@@ -76,18 +76,6 @@ export function DecisionCard({
           <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">{description}</p>
         )}
 
-        {/* HR Learning Context - shows when selected */}
-        {isSelected && hrContext && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            className="mt-3 p-3 rounded-lg bg-primary/5 border border-primary/10 flex items-start gap-2"
-          >
-            <span className="text-lg flex-shrink-0">💡</span>
-            <p className="text-sm text-foreground/80 leading-relaxed">{hrContext}</p>
-          </motion.div>
-        )}
-
         {/* Consequence reveal on selection */}
         {isSelected && consequence && (
           <motion.p
@@ -107,7 +95,7 @@ export function DecisionCard({
           animate={{ opacity: 1, scale: 1 }}
           className="absolute top-3 right-3 text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded"
         >
-          Selectionne
+          Sélectionné
         </motion.span>
       )}
     </motion.button>
