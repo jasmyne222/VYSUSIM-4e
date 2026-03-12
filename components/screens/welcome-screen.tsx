@@ -24,7 +24,8 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
         >
-          <span className="text-primary">VYSUSIM</span>
+          <span className="text-primary">VYSUSIM</span><br />
+          <span className="text-foreground text-xl md:text-2xl font-semibold">Diagnostic RH interactif</span>
         </motion.h1>
         
         {/* Duration badge */}
