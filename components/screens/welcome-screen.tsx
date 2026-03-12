@@ -25,7 +25,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
           transition={{ delay: 0.2 }}
         >
           <span className="text-primary font-bold">VYSUSIM</span><br />
-          Simulateur RH pour managers
+          Simulateur RH interactif
         </motion.h1>
         <motion.p
           className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto text-pretty leading-relaxed"
@@ -33,7 +33,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
         >
-          6 minutes pour maitriser les decisions RH critiques. Gerez une pizzeria, relevez des crises reelles, et comprenez pourquoi Vysual est necessaire.
+          30 minutes pour vivre des situations RH concretes. Identifiez vos vrais besoins pour que Vysual puisse creer votre solution sur-mesure.
         </motion.p>
       </motion.div>
 
@@ -45,7 +45,7 @@ export function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         className="my-4"
       >
         <VyvyBot
-          message="Bienvenue dans VYSUSIM ! Vous etes manager d'une pizzeria. Ensemble, affrontons des defis RH reels et voyons comment Vysual peut vous aider."
+          message="Bienvenue dans VYSUSIM ! Vous allez gerer une pizzeria et faire face a des situations RH reelles. Vos reponses nous aideront a creer votre solution Vysual sur-mesure."
           expression="happy"
           size="lg"
         />

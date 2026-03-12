@@ -22,24 +22,20 @@ export function GameLayout({ children, currentScreen, showProgress = true }: Gam
       {/* Header - Clean Vysual.ch style */}
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/60">
         <div className="container mx-auto px-4 py-3.5 flex items-center justify-between">
-          {/* Logo */}
+          {/* Logo - larger */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-3"
+            className="flex items-center"
           >
             <Image
               src="/vysual-logo.png"
               alt="Vysual"
-              width={100}
-              height={32}
+              width={140}
+              height={44}
               priority
-              className="h-7 w-auto"
+              className="h-10 w-auto"
             />
-            <div className="hidden sm:flex items-center gap-2">
-              <span className="w-px h-4 bg-border" />
-              <p className="text-xs font-medium text-muted-foreground tracking-wide uppercase">Serious Game</p>
-            </div>
           </motion.div>
 
           {/* Progress indicator */}
@@ -76,7 +72,7 @@ export function GameLayout({ children, currentScreen, showProgress = true }: Gam
         <div className="container mx-auto px-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
           <span>Vysual</span>
           <span className="w-1 h-1 rounded-full bg-primary/60" />
-          <span>Formation RH interactive</span>
+          <span>La solution suisse pour la gestion RH</span>
         </div>
       </footer>
     </div>
