@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { VyvyBot } from '@/components/game/vyvy-bot'
 import { Julie } from '@/components/game/characters'
 import { DecisionCard, DecisionGroup } from '@/components/game/decision-card'
+import { ProgressReward } from '@/components/game/progress-reward'
 import { ArrowLeft, ArrowRight, CheckCircle2, Clock, Wallet, Users, PenTool, Baby } from 'lucide-react'
 import type { MissionJulieData } from '@/lib/types/game'
 
@@ -186,6 +187,13 @@ export function JulieMissionScreen({ onComplete, onBack }: JulieMissionScreenPro
             message={getVyvyMessage()}
             expression={selectedOption ? 'happy' : 'thinking'}
             size="sm"
+          />
+
+          {/* Progress reward */}
+          <ProgressReward
+            currentStep={currentStep}
+            totalSteps={missionSteps.length}
+            missionName="Congé maternité"
           />
         </motion.div>
 

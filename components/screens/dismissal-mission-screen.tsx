@@ -9,6 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { VyvyBot } from '@/components/game/vyvy-bot'
 import { DecisionCard, DecisionGroup } from '@/components/game/decision-card'
+import { ProgressReward } from '@/components/game/progress-reward'
 import { ArrowLeft, ArrowRight, CheckCircle2, UserMinus, FileWarning, Clock, Wallet, PenTool } from 'lucide-react'
 import type { MissionDismissalData, Employee } from '@/lib/types/game'
 
@@ -217,16 +218,12 @@ export function DismissalMissionScreen({ employees, onComplete, onBack }: Dismis
             size="sm"
           />
           
-          {/* Info card */}
-          <Card className="border-red-200 bg-red-50/50">
-            <CardContent className="p-3">
-              <h4 className="font-medium text-red-800 mb-1 text-sm">Important</h4>
-              <p className="text-xs text-red-700">
-                Chaque choix sera utilise par Vysual pour vous accompagner 
-                dans ces situations delicates.
-              </p>
-            </CardContent>
-          </Card>
+          {/* Progress reward */}
+          <ProgressReward
+            currentStep={currentStep}
+            totalSteps={missionSteps.length}
+            missionName="Gestion des départs"
+          />
         </motion.div>
 
         {/* Right side - Decision interface */}

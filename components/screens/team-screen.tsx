@@ -102,7 +102,7 @@ export function TeamScreen({ onNext, onBack }: TeamScreenProps) {
   const [showOnboardingPopup, setShowOnboardingPopup] = useState(true)
   
   const [vyvyMessage, setVyvyMessage] = useState(
-    "Voici l'équipe de la pizzeria démo ! Dans votre cas, renseignez vos vrais employés."
+    "Renseignez les informations de vos employés pour personnaliser votre solution."
   )
 
   const handleEditEmployee = (employee: Employee) => {

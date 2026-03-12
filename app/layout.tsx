@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
-import { Inter, Geist_Mono } from 'next/font/google'
+import { Nunito, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const _inter = Inter({ 
+const _nunito = Nunito({ 
   subsets: ["latin"],
-  variable: '--font-inter',
-  display: 'swap'
+  variable: '--font-nunito',
+  display: 'swap',
+  weight: ['400', '500', '600', '700', '800', '900']
 });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 

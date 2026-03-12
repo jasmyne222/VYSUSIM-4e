@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { VyvyBot } from '@/components/game/vyvy-bot'
 import { Pablo } from '@/components/game/characters'
 import { DecisionCard, DecisionGroup } from '@/components/game/decision-card'
+import { ProgressReward } from '@/components/game/progress-reward'
 import { ArrowLeft, ArrowRight, CheckCircle2, AlertTriangle, FileText, UserCog, Wallet } from 'lucide-react'
 import type { MissionPabloData } from '@/lib/types/game'
 
@@ -192,6 +193,13 @@ export function PabloMissionScreen({ onComplete, onBack }: PabloMissionScreenPro
             message={getVyvyMessage()}
             expression={selectedOption ? 'happy' : 'thinking'}
             size="sm"
+          />
+
+          {/* Progress reward */}
+          <ProgressReward
+            currentStep={currentStep}
+            totalSteps={missionSteps.length}
+            missionName="Accident de travail"
           />
         </motion.div>
 

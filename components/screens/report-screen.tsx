@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { VyvyBot } from '@/components/game/vyvy-bot'
+import { SavingsIndicator } from '@/components/game/progress-reward'
 import { 
   CheckCircle2, Download, Send, Users, AlertTriangle, 
   Baby, Ambulance, UserMinus, FileText, Sparkles,
@@ -154,17 +155,21 @@ export function ReportScreen({ session, onRestart }: ReportScreenProps) {
       </motion.div>
 
       <div className="grid lg:grid-cols-3 gap-8">
-        {/* VyvyBot */}
+        {/* VyvyBot + Savings */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3 }}
+          className="space-y-4"
         >
           <VyvyBot
-            message="Bravo ! Vous avez complété la simulation. Ces informations vont permettre à Vysual de créer votre solution RH sur-mesure."
+            message="Bravo ! Vous avez complété le diagnostic. Ces informations vont permettre à Vysual de créer votre solution RH sur-mesure."
             expression="happy"
             size="md"
           />
+          
+          {/* Savings indicator - shows value of completing fully */}
+          <SavingsIndicator questionsAnswered={13} totalQuestions={13} />
         </motion.div>
 
         {/* Report sections */}

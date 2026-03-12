@@ -31,10 +31,10 @@ export function GameLayout({ children, currentScreen, showProgress = true }: Gam
             <Image
               src="/vysual-logo.png"
               alt="Vysual"
-              width={180}
-              height={56}
+              width={220}
+              height={70}
               priority
-              className="h-12 w-auto"
+              className="h-16 w-auto"
             />
           </motion.div>
 
