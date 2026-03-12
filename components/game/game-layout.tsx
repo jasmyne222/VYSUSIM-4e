@@ -18,11 +18,11 @@ export function GameLayout({ children, currentScreen, showProgress = true }: Gam
   const currentStep = screenOrder.indexOf(currentScreen)
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      {/* Header - Clean Vysual.ch style */}
-      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/60">
-        <div className="container mx-auto px-4 py-3.5 flex items-center justify-between">
-          {/* Logo - larger */}
+    <div className="h-screen bg-background flex flex-col overflow-hidden">
+      {/* Header */}
+      <header className="flex-shrink-0 bg-background/95 backdrop-blur-md border-b border-border/60 z-50">
+        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+          {/* Logo */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -34,7 +34,7 @@ export function GameLayout({ children, currentScreen, showProgress = true }: Gam
               width={140}
               height={44}
               priority
-              className="h-10 w-auto"
+              className="h-9 w-auto"
             />
           </motion.div>
 
@@ -62,13 +62,15 @@ export function GameLayout({ children, currentScreen, showProgress = true }: Gam
         </div>
       </header>
 
-      {/* Main content */}
-      <main className="flex-1 container mx-auto px-4 py-8 md:py-10">
-        {children}
+      {/* Main content — scrollable zone only */}
+      <main className="flex-1 overflow-y-auto">
+        <div className="container mx-auto px-4 py-4">
+          {children}
+        </div>
       </main>
 
-      {/* Footer - Minimal Vysual style */}
-      <footer className="border-t border-border/60 py-4 bg-muted/30">
+      {/* Footer */}
+      <footer className="flex-shrink-0 border-t border-border/60 py-3 bg-muted/30">
         <div className="container mx-auto px-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
           <span>Vysual</span>
           <span className="w-1 h-1 rounded-full bg-primary/60" />

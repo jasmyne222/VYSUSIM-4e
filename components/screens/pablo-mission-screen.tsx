@@ -180,21 +180,21 @@ export function PabloMissionScreen({ onComplete, onBack }: PabloMissionScreenPro
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center space-y-2"
+        className="text-center space-y-1"
       >
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-sm mb-2">
-          <AlertTriangle className="w-4 h-4" />
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs mb-1">
+          <AlertTriangle className="w-3 h-3" />
           Situation de crise
         </div>
-        <h2 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
+        <h2 className="text-xl md:text-2xl font-semibold text-foreground tracking-tight">
           Mission 2 — Accident de travail
         </h2>
-        <p className="text-muted-foreground">
+        <p className="text-sm text-muted-foreground">
           Etape {currentStep + 1} sur {missionSteps.length}
         </p>
       </motion.div>
@@ -209,24 +209,24 @@ export function PabloMissionScreen({ onComplete, onBack }: PabloMissionScreenPro
         />
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-8">
+      <div className="grid lg:grid-cols-3 gap-4">
         {/* Left side - Pablo and VyvyBot */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="space-y-6"
+          className="space-y-3"
         >
           {/* Pablo with injury indicator */}
           <Card className="border-amber-200 bg-amber-50/50">
-            <CardContent className="pt-6 flex flex-col items-center relative">
-              <div className="absolute top-4 right-4">
+            <CardContent className="pt-4 pb-4 flex flex-col items-center relative">
+              <div className="absolute top-3 right-3">
                 <span className="flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
                 </span>
               </div>
-              <Pablo expression={getPabloExpression()} size="lg" />
-              <p className="mt-4 text-sm text-muted-foreground text-center italic">
+              <Pablo expression={getPabloExpression()} size="md" />
+              <p className="mt-2 text-sm text-muted-foreground text-center italic">
                 {currentStep === 0 && '"Aie ! Je me suis coupe en preparant les pizzas..."'}
                 {currentStep === 1 && '"Il faut que je voie un medecin, c\'est assez profond."'}
                 {currentStep === 2 && '"Je suis desole, je vais devoir m\'absenter..."'}
@@ -258,16 +258,16 @@ export function PabloMissionScreen({ onComplete, onBack }: PabloMissionScreenPro
               exit={{ opacity: 0, x: -20 }}
             >
               <Card>
-                <CardHeader>
+                <CardHeader className="pb-2">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-700">
+                    <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
                       {step.icon}
                     </div>
-                    <CardTitle>{step.title}</CardTitle>
+                    <CardTitle className="text-base">{step.title}</CardTitle>
                   </div>
-                  <CardDescription>{step.description}</CardDescription>
+                  <CardDescription className="text-sm">{step.description}</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pb-4">
                   <DecisionGroup>
                     {step.options.map((option, index) => (
                       <DecisionCard
@@ -294,7 +294,7 @@ export function PabloMissionScreen({ onComplete, onBack }: PabloMissionScreenPro
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="flex justify-between gap-4 pt-8"
+        className="flex justify-between gap-4 pt-4"
       >
         <Button
           variant="outline"

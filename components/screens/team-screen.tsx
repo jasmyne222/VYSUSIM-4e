@@ -14,7 +14,8 @@ import { VyvyBot } from '@/components/game/vyvy-bot'
 import { Maria, Pablo, Julie, Carlos } from '@/components/game/characters'
 import { 
   ArrowRight, ArrowLeft, Briefcase, Clock, Calendar, 
-  Plus, Edit2, Trash2, Users, GitBranch, Car, X, Check
+  Plus, Edit2, Trash2, Users, GitBranch, Car, X, Check,
+  Info
 } from 'lucide-react'
 import type { Employee, RoleType, ContractType, TimekeepingMethod } from '@/lib/types/game'
 
@@ -98,9 +99,10 @@ export function TeamScreen({ onNext, onBack }: TeamScreenProps) {
   const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null)
   const [isAddingNew, setIsAddingNew] = useState(false)
   const [formData, setFormData] = useState<Omit<Employee, 'id'>>(emptyEmployee)
+  const [showOnboardingPopup, setShowOnboardingPopup] = useState(true)
   
   const [vyvyMessage, setVyvyMessage] = useState(
-    "Voici l'equipe de ta pizzeria ! Tu peux modifier les informations ou ajouter de nouveaux employes."
+    "Voici l'equipe de la pizzeria demo ! Dans votre cas, renseignez vos vrais employes."
   )
 
   const handleEditEmployee = (employee: Employee) => {
@@ -188,17 +190,65 @@ export function TeamScreen({ onNext, onBack }: TeamScreenProps) {
   const subordinates = employees.filter(e => e.managerId !== null)
 
   return (
-    <div className="space-y-8">
-      {/* Header - Vysual corporate style */}
+    <div className="space-y-6">
+      {/* Onboarding popup — shown on first visit */}
+      <Dialog open={showOnboardingPopup} onOpenChange={setShowOnboardingPopup}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-xl">
+              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <Info className="w-4 h-4 text-primary" />
+              </div>
+              Avant de commencer
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-2">
+            <p className="text-foreground leading-relaxed">
+              Dans cette etape, vous voyez une <strong>equipe de demonstration</strong> (pizzeria fictive). 
+            </p>
+            <div className="bg-primary/5 border border-primary/15 rounded-lg p-4 space-y-2">
+              <p className="font-semibold text-sm text-foreground">Dans votre vraie utilisation :</p>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <span className="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">1</span>
+                  Supprimez les employes de demo
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">2</span>
+                  Ajoutez vos vrais employes avec leurs informations reelles
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">3</span>
+                  Ces donnees permettront a Vysual de personnaliser votre solution
+                </li>
+              </ul>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Pour cette demo, vous pouvez garder l'equipe telle quelle et cliquer sur "Continuer".
+            </p>
+          </div>
+          <DialogFooter>
+            <Button 
+              size="lg" 
+              onClick={() => setShowOnboardingPopup(false)}
+              className="w-full font-semibold"
+            >
+              J'ai compris, continuer
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center space-y-3"
+        className="text-center space-y-1"
       >
-        <h2 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
+        <h2 className="text-xl md:text-2xl font-semibold text-foreground tracking-tight">
           Configuration de l'equipe
         </h2>
-        <p className="text-muted-foreground max-w-xl mx-auto text-sm">
+        <p className="text-muted-foreground text-sm">
           Gerez votre equipe et leurs informations contractuelles
         </p>
       </motion.div>

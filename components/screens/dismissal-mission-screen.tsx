@@ -223,21 +223,21 @@ export function DismissalMissionScreen({ employees, onComplete, onBack }: Dismis
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center space-y-2"
+        className="text-center space-y-1"
       >
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-100 text-red-800 text-sm mb-2">
-          <UserMinus className="w-4 h-4" />
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-100 text-red-800 text-xs mb-1">
+          <UserMinus className="w-3 h-3" />
           Procedure sensible
         </div>
-        <h2 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
+        <h2 className="text-xl md:text-2xl font-semibold text-foreground tracking-tight">
           Mission 3 — Gestion des licenciements
         </h2>
-        <p className="text-muted-foreground">
+        <p className="text-sm text-muted-foreground">
           Etape {currentStep + 1} sur {missionSteps.length}
         </p>
       </motion.div>
@@ -252,25 +252,24 @@ export function DismissalMissionScreen({ employees, onComplete, onBack }: Dismis
         />
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-8">
+      <div className="grid lg:grid-cols-3 gap-4">
         {/* Left side - VyvyBot */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="space-y-6"
+          className="space-y-3"
         >
           <VyvyBot
             message={getVyvyMessage()}
             expression={selectedOption ? 'happy' : 'thinking'}
-            size="md"
+            size="sm"
           />
           
           {/* Info card */}
           <Card className="border-red-200 bg-red-50/50">
-            <CardContent className="p-4">
-              <h4 className="font-medium text-red-800 mb-2">Important</h4>
-              <p className="text-sm text-red-700">
-                Cette mission configure vos procedures de depart. 
+            <CardContent className="p-3">
+              <h4 className="font-medium text-red-800 mb-1 text-sm">Important</h4>
+              <p className="text-xs text-red-700">
                 Chaque choix sera utilise par Vysual pour vous accompagner 
                 dans ces situations delicates.
               </p>
@@ -293,16 +292,16 @@ export function DismissalMissionScreen({ employees, onComplete, onBack }: Dismis
               exit={{ opacity: 0, x: -20 }}
             >
               <Card>
-                <CardHeader>
+                <CardHeader className="pb-2">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center text-red-700">
+                    <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
                       {step.icon}
                     </div>
-                    <CardTitle>{step.title}</CardTitle>
+                    <CardTitle className="text-base">{step.title}</CardTitle>
                   </div>
-                  <CardDescription>{step.description}</CardDescription>
+                  <CardDescription className="text-sm">{step.description}</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pb-4">
                   {/* Select type */}
                   {step.type === 'select' && (
                     <Select 
@@ -391,7 +390,7 @@ export function DismissalMissionScreen({ employees, onComplete, onBack }: Dismis
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="flex justify-between gap-4 pt-8"
+        className="flex justify-between gap-4 pt-4"
       >
         <Button
           variant="outline"
