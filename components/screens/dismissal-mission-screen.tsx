@@ -391,18 +391,25 @@ export function DismissalMissionScreen({ employees, onComplete, onBack }: Dismis
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="flex justify-between pt-6"
+        className="flex justify-between gap-4 pt-8"
       >
         <Button
           variant="outline"
+          size="lg"
           onClick={currentStep > 0 ? () => setCurrentStep((p) => p - 1) : onBack}
+          className="flex items-center gap-2 font-semibold"
         >
-          <ArrowLeft className="mr-2 w-4 h-4" />
+          <ArrowLeft className="w-5 h-5" />
           {currentStep > 0 ? 'Etape precedente' : 'Retour'}
         </Button>
-        <Button onClick={handleNext} disabled={!canProceed()}>
+        <Button 
+          size="lg" 
+          onClick={handleNext} 
+          disabled={!canProceed()}
+          className="flex items-center gap-2 font-semibold shadow-lg shadow-primary/20"
+        >
           {isLastStep ? 'Voir les resultats' : 'Etape suivante'}
-          <ArrowRight className="ml-2 w-4 h-4" />
+          <ArrowRight className="w-5 h-5" />
         </Button>
       </motion.div>
     </div>
@@ -503,13 +510,26 @@ function ResultScreen({ decisions, employees, onComplete, onBack }: ResultScreen
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="flex justify-center gap-4 pt-6"
+        className="flex justify-center gap-4 pt-8"
       >
-        <Button variant="outline" onClick={onBack}>
-          <ArrowLeft className="mr-2 w-4 h-4" />
+        <Button 
+          variant="outline" 
+          size="lg"
+          onClick={onBack}
+          className="flex items-center gap-2 font-semibold"
+        >
+          <ArrowLeft className="w-5 h-5" />
           Modifier mes choix
         </Button>
-        <Button onClick={onComplete}>
+        <Button 
+          size="lg"
+          onClick={onComplete}
+          className="flex items-center gap-2 font-semibold shadow-lg shadow-primary/20"
+        >
+          Voir le recapitulatif
+          <ArrowRight className="w-5 h-5" />
+        </Button>
+      </motion.div>
           Voir le rapport final
           <ArrowRight className="ml-2 w-4 h-4" />
         </Button>

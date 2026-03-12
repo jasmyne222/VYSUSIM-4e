@@ -325,26 +325,26 @@ export function ReportScreen({ session, onRestart }: ReportScreenProps) {
         </motion.div>
       </div>
 
-      {/* CTA buttons */}
+      {/* CTA buttons - Large and clear for accessibility */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6 }}
-        className="flex flex-col sm:flex-row justify-center gap-4 pt-8"
+        className="flex flex-col sm:flex-row justify-center gap-4 pt-10"
       >
         <Button 
-          size="lg" 
+          size="xl" 
           onClick={handleSendToVysual}
-          className="gap-2"
+          className="gap-2 font-semibold shadow-lg shadow-primary/20"
         >
           <Send className="w-5 h-5" />
           Envoyer a Vysual
         </Button>
         <Button 
-          size="lg" 
+          size="xl" 
           variant="outline"
           onClick={handleDownloadPDF}
-          className="gap-2"
+          className="gap-2 font-semibold"
         >
           <Download className="w-5 h-5" />
           Telecharger PDF

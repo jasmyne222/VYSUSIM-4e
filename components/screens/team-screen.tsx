@@ -584,15 +584,24 @@ export function TeamScreen({ onNext, onBack }: TeamScreenProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="flex justify-between pt-4"
+        className="flex justify-between gap-4 pt-8"
       >
-        <Button variant="outline" onClick={onBack}>
-          <ArrowLeft className="mr-2 w-4 h-4" />
+        <Button 
+          variant="outline" 
+          size="lg"
+          onClick={onBack}
+          className="flex items-center gap-2 font-semibold"
+        >
+          <ArrowLeft className="w-5 h-5" />
           Retour
         </Button>
-        <Button onClick={() => onNext(employees)}>
+        <Button 
+          size="lg" 
+          onClick={() => onNext(employees)}
+          className="flex items-center gap-2 font-semibold shadow-lg shadow-primary/20"
+        >
           Continuer
-          <ArrowRight className="ml-2 w-4 h-4" />
+          <ArrowRight className="w-5 h-5" />
         </Button>
       </motion.div>
     </div>
