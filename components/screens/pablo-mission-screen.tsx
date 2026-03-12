@@ -200,6 +200,8 @@ export function PabloMissionScreen({ onComplete, onBack }: PabloMissionScreenPro
             currentStep={currentStep}
             totalSteps={missionSteps.length}
             missionName="Accident de travail"
+            selectedOption={selectedOption}
+            answeredCount={Object.keys(decisions).length}
           />
         </motion.div>
 

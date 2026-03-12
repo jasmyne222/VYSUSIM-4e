@@ -194,6 +194,8 @@ export function JulieMissionScreen({ onComplete, onBack }: JulieMissionScreenPro
             currentStep={currentStep}
             totalSteps={missionSteps.length}
             missionName="Congé maternité"
+            selectedOption={selectedOption}
+            answeredCount={Object.keys(decisions).length}
           />
         </motion.div>
 

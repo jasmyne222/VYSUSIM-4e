@@ -223,6 +223,11 @@ export function DismissalMissionScreen({ employees, onComplete, onBack }: Dismis
             currentStep={currentStep}
             totalSteps={missionSteps.length}
             missionName="Gestion des départs"
+            selectedOption={decisions[step?.id] as string || null}
+            answeredCount={Object.keys(decisions).filter(k => {
+              const v = decisions[k]
+              return Array.isArray(v) ? v.length > 0 : !!v
+            }).length}
           />
         </motion.div>
 

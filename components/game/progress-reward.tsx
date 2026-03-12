@@ -1,87 +1,174 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { CheckCircle2, Circle, Trophy, Clock, Coins } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { CheckCircle2, Circle, Trophy, Clock, Coins, Zap, Star } from 'lucide-react'
 
 interface ProgressRewardProps {
   currentStep: number
   totalSteps: number
   missionName: string
+  selectedOption: string | null
+  answeredCount: number // total answers given across all steps so far
 }
 
-export function ProgressReward({ currentStep, totalSteps, missionName }: ProgressRewardProps) {
-  const progress = ((currentStep + 1) / totalSteps) * 100
-  const isComplete = currentStep === totalSteps - 1
+const SELECTION_MESSAGES = [
+  "Bonne décision !",
+  "Choix enregistré.",
+  "Bien joué !",
+  "Votre profil se précise.",
+]
+
+export function ProgressReward({ currentStep, totalSteps, missionName, selectedOption, answeredCount }: ProgressRewardProps) {
+  const [prevAnswered, setPrevAnswered] = useState(answeredCount)
+  const [showFeedback, setShowFeedback] = useState(false)
+  const [feedbackMsg, setFeedbackMsg] = useState('')
+
+  // Trigger feedback animation whenever a new answer is given
+  useEffect(() => {
+    if (answeredCount > prevAnswered) {
+      const msg = SELECTION_MESSAGES[answeredCount % SELECTION_MESSAGES.length]
+      setFeedbackMsg(msg)
+      setShowFeedback(true)
+      setPrevAnswered(answeredCount)
+      const t = setTimeout(() => setShowFeedback(false), 2000)
+      return () => clearTimeout(t)
+    }
+  }, [answeredCount, prevAnswered])
+
+  // Progress based on answers given, not just current step
+  const stepsCompleted = currentStep // steps fully validated
+  const currentHasAnswer = !!selectedOption
+  const totalAnswered = stepsCompleted + (currentHasAnswer ? 1 : 0)
+  const progress = (totalAnswered / totalSteps) * 100
+  const isAllComplete = totalAnswered === totalSteps
 
   return (
     <div className="bg-card border border-border rounded-lg p-4 space-y-3">
-      {/* Progress bar */}
-      <div className="space-y-2">
-        <div className="flex justify-between items-center text-sm">
-          <span className="font-semibold text-foreground">{missionName}</span>
-          <span className="text-primary font-bold">{currentStep + 1}/{totalSteps}</span>
-        </div>
-        <div className="h-2 bg-muted rounded-full overflow-hidden">
-          <motion.div
-            className="h-full bg-primary rounded-full"
-            initial={{ width: 0 }}
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-          />
-        </div>
+      {/* Header + live feedback */}
+      <div className="flex justify-between items-center">
+        <span className="text-sm font-semibold text-foreground">{missionName}</span>
+        <AnimatePresence mode="wait">
+          {showFeedback ? (
+            <motion.span
+              key="feedback"
+              initial={{ opacity: 0, x: 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -10 }}
+              className="flex items-center gap-1 text-xs font-bold text-primary"
+            >
+              <Zap className="w-3 h-3" />
+              {feedbackMsg}
+            </motion.span>
+          ) : (
+            <motion.span
+              key="count"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-primary font-bold text-sm"
+            >
+              {totalAnswered}/{totalSteps}
+            </motion.span>
+          )}
+        </AnimatePresence>
       </div>
 
-      {/* Step indicators */}
-      <div className="flex justify-between">
-        {Array.from({ length: totalSteps }).map((_, index) => (
-          <div key={index} className="flex flex-col items-center">
-            {index < currentStep ? (
-              <CheckCircle2 className="w-5 h-5 text-primary" />
-            ) : index === currentStep ? (
-              <motion.div
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 1, repeat: Infinity }}
-              >
-                <Circle className="w-5 h-5 text-primary fill-primary/20" />
-              </motion.div>
-            ) : (
-              <Circle className="w-5 h-5 text-muted-foreground/40" />
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* Motivation message */}
-      {isComplete ? (
+      {/* Progress bar — fills on each answer */}
+      <div className="h-2 bg-muted rounded-full overflow-hidden">
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-2 text-sm bg-green-50 text-green-700 rounded-lg p-2"
-        >
-          <Trophy className="w-4 h-4" />
-          <span className="font-medium">Mission complétée !</span>
-        </motion.div>
-      ) : (
-        <p className="text-xs text-muted-foreground text-center">
-          Plus que {totalSteps - currentStep - 1} étape{totalSteps - currentStep - 1 > 1 ? 's' : ''} pour terminer cette mission
-        </p>
-      )}
+          className="h-full bg-primary rounded-full"
+          initial={{ width: 0 }}
+          animate={{ width: `${progress}%` }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
+        />
+      </div>
+
+      {/* Step indicators with per-answer fill */}
+      <div className="flex justify-between gap-1">
+        {Array.from({ length: totalSteps }).map((_, index) => {
+          const isValidated = index < currentStep
+          const isCurrent = index === currentStep
+          const isAnswered = isCurrent && currentHasAnswer
+          return (
+            <div key={index} className="flex flex-col items-center flex-1">
+              {isValidated ? (
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                >
+                  <CheckCircle2 className="w-5 h-5 text-primary" />
+                </motion.div>
+              ) : isAnswered ? (
+                <motion.div
+                  initial={{ scale: 0.8 }}
+                  animate={{ scale: [1, 1.25, 1] }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <Star className="w-5 h-5 text-primary fill-primary" />
+                </motion.div>
+              ) : isCurrent ? (
+                <motion.div
+                  animate={{ scale: [1, 1.15, 1] }}
+                  transition={{ duration: 1.2, repeat: Infinity }}
+                >
+                  <Circle className="w-5 h-5 text-primary fill-primary/20" />
+                </motion.div>
+              ) : (
+                <Circle className="w-5 h-5 text-muted-foreground/30" />
+              )}
+            </div>
+          )
+        })}
+      </div>
+
+      {/* Bottom message */}
+      <AnimatePresence mode="wait">
+        {isAllComplete ? (
+          <motion.div
+            key="complete"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center gap-2 text-sm bg-green-50 text-green-700 rounded-lg p-2"
+          >
+            <Trophy className="w-4 h-4 flex-shrink-0" />
+            <span className="font-semibold">Mission complétée ! Cliquez sur Suivant.</span>
+          </motion.div>
+        ) : currentHasAnswer && !showFeedback ? (
+          <motion.p
+            key="next"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-xs text-muted-foreground text-center"
+          >
+            Réponse enregistrée — cliquez sur <span className="font-medium text-foreground">Étape suivante</span> pour continuer
+          </motion.p>
+        ) : !currentHasAnswer ? (
+          <motion.p
+            key="prompt"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-xs text-muted-foreground text-center"
+          >
+            {totalSteps - currentStep} décision{totalSteps - currentStep > 1 ? 's' : ''} restante{totalSteps - currentStep > 1 ? 's' : ''}
+          </motion.p>
+        ) : null}
+      </AnimatePresence>
     </div>
   )
 }
 
-// Savings calculator component - shows what user saves by filling correctly
+// Savings calculator — shown on report screen
 export function SavingsIndicator({ questionsAnswered, totalQuestions }: { questionsAnswered: number; totalQuestions: number }) {
-  // Based on Vysual data: incomplete forms cost 10-15h extra and 2000-3000 CHF
   const completionRate = questionsAnswered / totalQuestions
-  const timeSaved = Math.round(completionRate * 12.5) // Average of 10-15h
-  const moneySaved = Math.round(completionRate * 2500) // Average of 2000-3000 CHF
+  const timeSaved = Math.round(completionRate * 12.5)
+  const moneySaved = Math.round(completionRate * 2500)
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg p-4"
+      className="bg-green-50 border border-green-200 rounded-lg p-4"
     >
       <p className="text-sm font-semibold text-green-800 mb-3 flex items-center gap-2">
         <Trophy className="w-4 h-4" />
@@ -99,7 +186,7 @@ export function SavingsIndicator({ questionsAnswered, totalQuestions }: { questi
           <Coins className="w-5 h-5 text-green-600" />
           <div>
             <p className="text-lg font-bold text-green-700">~{moneySaved} CHF</p>
-            <p className="text-xs text-green-600">de coûts</p>
+            <p className="text-xs text-green-600">de coûts évités</p>
           </div>
         </div>
       </div>
