@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
 import { VyvyBot } from '@/components/game/vyvy-bot'
 import { Maria, Pablo, Julie, Carlos } from '@/components/game/characters'
 import { 
@@ -199,10 +199,13 @@ export function TeamScreen({ onNext, onBack }: TeamScreenProps) {
               <Users className="w-5 h-5 text-primary" />
               Créez votre équipe
             </DialogTitle>
+            <DialogDescription>
+              Renseignez les informations de vos employés pour personnaliser votre solution Vysual.
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-2">
             <p className="text-foreground leading-relaxed">
-              Renseignez ici les <strong>vrais employés</strong> de votre entreprise avec leurs informations contractuelles.
+              Ajoutez les <strong>vrais employés</strong> de votre entreprise avec leurs informations contractuelles.
             </p>
             <div className="bg-muted/50 rounded-lg p-4 space-y-3">
               <p className="text-sm text-muted-foreground">Ces informations permettront de :</p>
