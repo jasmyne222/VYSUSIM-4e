@@ -405,5 +405,5 @@ function ResultScreen({ decisions, onComplete, onBack }: ResultScreenProps) {
         </Button>
       </motion.div>
     </div>
-  )
+  );
 }
