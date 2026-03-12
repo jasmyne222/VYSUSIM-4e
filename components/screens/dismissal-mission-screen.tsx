@@ -530,10 +530,6 @@ function ResultScreen({ decisions, employees, onComplete, onBack }: ResultScreen
           <ArrowRight className="w-5 h-5" />
         </Button>
       </motion.div>
-          Voir le rapport final
-          <ArrowRight className="ml-2 w-4 h-4" />
-        </Button>
-      </motion.div>
     </div>
   )
 }
