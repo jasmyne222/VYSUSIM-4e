@@ -107,8 +107,8 @@
 }
 
 @theme inline {
-  /* Nunito for friendly Vysual aesthetic, Inter fallback */
-  --font-sans: 'Nunito', 'Inter', system-ui, sans-serif;
+  /* Poppins for modern Vysual aesthetic - matches brand design */
+  --font-sans: 'Poppins', system-ui, sans-serif;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
   --color-background: var(--background);
   --color-foreground: var(--foreground);

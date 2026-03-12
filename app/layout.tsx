@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
-import { Nunito, Geist_Mono } from 'next/font/google'
+import { Poppins, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const _nunito = Nunito({ 
+const _poppins = Poppins({ 
   subsets: ["latin"],
-  variable: '--font-nunito',
+  variable: '--font-poppins',
   display: 'swap',
   weight: ['400', '500', '600', '700', '800', '900']
 });
