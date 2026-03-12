@@ -504,8 +504,11 @@ export function TeamScreen({ onNext, onBack }: TeamScreenProps) {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle>
-              {isAddingNew ? 'Nouvel employe' : `Modifier ${editingEmployee?.name}`}
+              {isAddingNew ? 'Nouvel employé' : `Modifier ${editingEmployee?.name}`}
             </DialogTitle>
+            <DialogDescription>
+              {isAddingNew ? 'Ajoutez un nouvel employé à votre équipe.' : 'Modifiez les informations de cet employé.'}
+            </DialogDescription>
           </DialogHeader>
           
           <div className="space-y-4 py-4">
