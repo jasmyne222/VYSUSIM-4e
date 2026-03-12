@@ -6,11 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { VyvyBot } from '@/components/game/vyvy-bot'
 import { SavingsIndicator } from '@/components/game/progress-reward'
-import { 
-  CheckCircle2, Download, Send, Users, AlertTriangle, 
-  Baby, Ambulance, UserMinus, FileText, Sparkles,
-  Building, Clock, Wallet, PenTool
-} from 'lucide-react'
+import { Clock } from 'lucide-react'
 import type { GameSession } from '@/lib/types/game'
 
 interface ReportScreenProps {
@@ -262,6 +258,23 @@ export function ReportScreen({ session, onRestart }: ReportScreenProps) {
                   question="Qui valide les demandes de congé maternité ?"
                   answer={formatValidation(session.missionJulie.workflowValidation)} 
                 />
+                
+                {/* Time savings message */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-6 p-4 rounded-lg bg-primary/5 border border-primary/20 flex items-start gap-3"
+                >
+                  <Clock className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">
+                      Vous avez économisé 2-3 heures
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      En clarifiant votre gestion des congés maternité dès maintenant, vous évitez des ajustements coûteux et des interruptions ultérieures.
+                    </p>
+                  </div>
+                </motion.div>
               </CardContent>
             </Card>
           )}
@@ -293,6 +306,23 @@ export function ReportScreen({ session, onRestart }: ReportScreenProps) {
                   question="Quel maintien de salaire pendant l'arrêt ?"
                   answer={formatAccidentSalary(session.missionPablo.accidentSalaire)} 
                 />
+                
+                {/* Time savings message */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-6 p-4 rounded-lg bg-primary/5 border border-primary/20 flex items-start gap-3"
+                >
+                  <Clock className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">
+                      Vous avez économisé 2-3 heures
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      En préparant vos procédures d'accident maintenant, vous évitez des retards et des non-conformités lors du sinistre.
+                    </p>
+                  </div>
+                </motion.div>
               </CardContent>
             </Card>
           )}
@@ -324,6 +354,23 @@ export function ReportScreen({ session, onRestart }: ReportScreenProps) {
                   question="Qui signe les documents de départ ?"
                   answer={formatSignataire(session.missionDismissal.signataire)} 
                 />
+                
+                {/* Time savings message */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-6 p-4 rounded-lg bg-primary/5 border border-primary/20 flex items-start gap-3"
+                >
+                  <Clock className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">
+                      Vous avez économisé 3-4 heures
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      En clarifiant vos procédures de départ maintenant, vous êtes préparé et conformes légalement dès le premier licenciement.
+                    </p>
+                  </div>
+                </motion.div>
               </CardContent>
             </Card>
           )}
